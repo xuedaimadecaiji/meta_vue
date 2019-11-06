@@ -1,0 +1,70 @@
+html{
+  margin: 0!important;
+  padding: 0!important;
+  height: 100%!important;
+}
+body{
+  margin: 0!important;
+  padding: 0!important;
+  height: 100%!important;
+}
+div{
+  text-align: left;
+}
+a{
+  text-decoration-line: none;
+}
+.wrapper{
+  max-width: 1000px!important;
+  margin: auto!important;
+}
+.el-container{
+  padding: 0!important;
+  margin: 0!important;
+  height: 100%;
+  .el-header, .el-main, .el-footer{
+    height: fit-content!important;
+  }
+  .el-header{
+    height: fit-content!important;
+  }
+}
+.el-table{
+  width: fit-content!important;
+}
+.el-drawer__body{
+  padding: 20px!important;
+}
+#nprogress .bar {
+  background: gold !important; //自定义颜色
+}
+
+.SceneDetailDrawer{
+  .el-drawer__body{
+    height: 100% !important;
+    .el-main{
+      height: 100% !important;
+      overflow-y: auto!important;
+    }
+  }
+  .box-card{
+    .item{
+      padding: 5px 0;
+    }
+  }
+}
+
+.LeftNavigation{
+  height: calc(100% - 40px);
+  padding: 20px 10px;
+  background: #545c64;
+  a{
+    display: block;
+    margin: 0;
+    padding: 10px 20px;
+    color: #fff;
+  }
+  .router-link-exact-active{
+    color: gold;
+  }
+}
