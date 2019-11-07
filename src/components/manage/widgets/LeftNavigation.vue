@@ -4,9 +4,9 @@
       <div slot="header" class="clearfix">
         <span><i :class="'fa fa-fw fa-' + sub.icon"></i> &nbsp;{{sub.title}}</span>
       </div>
-      <router-link :to="{name: 'ManageEdit', params: {table: item.name}}"
-                   :index="sub.index + '-' + item.index" v-for="item in sub.children" :key="item.index">
-        {{item.title}}
+      <router-link :to="{name: 'ManageEdit', params: {table: item['tableName']}}"
+                   v-for="item in systemTable" :key="item.index" v-if="item['tableComment'] === sub.title">
+        {{item['tableName']}}
       </router-link>
     </el-card>
   </div>
@@ -17,12 +17,26 @@ export default {
   // #545c64 #ffd04b
   name: 'Navigation',
   computed: {
-    navList () {
-      return this.$store.state.manageNavList
+    systemTable () {
+      return this.$store.state.systemTable
     }
   },
   data () {
     return {
+      navList: [
+        {
+          title: '基础表'
+        },
+        {
+          title: '数据表'
+        },
+        {
+          title: '辅助表'
+        },
+        {
+          title: '用户表'
+        }
+      ]
     }
   }
 }
@@ -30,7 +44,6 @@ export default {
 
 <style lang="scss">
   .LeftNavigation{
-    height: calc(100% - 40px);
     padding: 20px 10px;
     background: #545c64;
     .el-card{
