@@ -8,10 +8,10 @@
       <el-col :span="24">
         <h3>{{sub.title}}</h3>
       </el-col>
-      <el-col :span="6" v-for="item in sub.children" :key="item.index">
-        <router-link :to="{name: 'ManageEdit', params: {table: item.name}}">
+      <el-col :span="6" v-for="item in systemTable" :key="item.index" v-if="item['tableComment'].split('_')[0] === sub.title">
+        <router-link :to="{name: 'ManageEdit', params: {table: item['tableName']}}" >
           <el-card always="always">
-            {{item.title}}
+            {{item['tableComment'].split('_')[1]}}
           </el-card>
         </router-link>
       </el-col>
@@ -26,12 +26,30 @@
 export default {
   name: 'ManageIndex',
   computed: {
-    navList () {
-      return this.$store.state.manageNavList
+    systemTable () {
+      return this.$store.state.systemTable
     }
   },
   data () {
     return {
+      navList: [
+        {
+          title: '基础表',
+          icon: 'dashboard'
+        },
+        {
+          title: '数据表',
+          icon: 'database'
+        },
+        {
+          title: '辅助表',
+          icon: 'gears'
+        },
+        {
+          title: '用户相关表',
+          icon: 'users'
+        }
+      ]
     }
   }
 }
@@ -39,6 +57,7 @@ export default {
 
 <style lang="scss">
   .ManageIndex{
+    padding: 0 20px;
     h1{
       text-align: center;
       margin: 20px 20px 50px 20px;

@@ -2,7 +2,7 @@
   <el-container class="SceneCategory">
     <el-header>
       <div class="wrapper">
-        <el-button type="primary" @click="postSceneDrawer=true">
+        <el-button style="margin-top: 20px" type="primary" @click="postSceneDrawer=true">
           <i class="fa fa-plus-circle"></i>
           新增工艺场景
         </el-button>

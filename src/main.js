@@ -11,7 +11,6 @@ import Vuex from 'vuex'
 import store from './store/store'
 import axios from 'axios'
 import api from './fetch/api'
-// NavigationDuplicated报错
 import router from './router'
 import Router from 'vue-router'
 
@@ -29,10 +28,14 @@ Vue.use(ElementUI)
 Vue.config.productionTip = false
 
 function beforeEachFunc () {
+  if (store.state.categories === null) {
+    api.get({url: 'categories/tree'}).then(res => {
+      store.commit('setCategories', res)
+    })
+  }
   if (store.state.systemTable === null) {
     api.get({url: 'system_table'}).then(res => {
       store.commit('setSystemTable', res)
-      console.log(res)
     })
   }
   if (store.state.material === null) {

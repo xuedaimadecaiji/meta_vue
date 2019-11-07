@@ -8,70 +8,11 @@ export default new Vuex.Store({
     },
     // root: 'http://114.115.238.65:8000/',
     // root: 'http://114.115.238.65/api/',
-    root: 'http://localhost:8000/api/',
+    // root: 'http://localhost:8000/api/',
+    root: 'http://192.168.1.103:8000/api/manage/',
     posting: false,
     pageLoading: false,
     scrollLoading: false,
-    manageNavList: [
-      {
-        title: '系统表管理',
-        icon: 'gear',
-        children: [
-          {
-            title: '工艺分类表',
-            name: 'categories'
-          }
-        ]
-      },
-      {
-        title: '基础表管理',
-        icon: 'table',
-        children: [
-          {
-            title: '物料',
-            name: 'material'
-          },
-          {
-            title: '能源',
-            name: 'energy'
-          },
-          {
-            title: '关键参数',
-            name: 'parameter'
-          },
-          {
-            title: '其他数据',
-            name: 'other'
-          },
-          {
-            title: '设备',
-            name: 'device'
-          },
-          {
-            title: '环境负荷',
-            name: 'env_load'
-          }
-        ]
-      },
-      {
-        title: '辅助表管理',
-        icon: 'external-link',
-        children: [
-          {
-            title: '单位表',
-            name: 'unit'
-          },
-          {
-            title: '数据来源',
-            name: 'data_source'
-          },
-          {
-            title: '采集原因',
-            name: 'collect_reason'
-          }
-        ]
-      }
-    ],
     loginTime: JSON.parse(localStorage.getItem('loginTime')) || null,
     systemTime: JSON.parse(localStorage.getItem('systemTime')) || null,
     auth: JSON.parse(localStorage.getItem('auth')) || null,

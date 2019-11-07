@@ -1,12 +1,9 @@
 <template>
-  <el-container id="app">
-    <el-header id="navigation">
-      <Navigation></Navigation>
-    </el-header>
-    <el-main id="main">
-      <router-view></router-view>
-    </el-main>
-  </el-container>
+  <div id="app">
+    <Navigation id="app_navigation"></Navigation>
+    <div class="clearfix"></div>
+    <router-view id="app_main"></router-view>
+  </div>
 </template>
 
 <script>
@@ -27,15 +24,18 @@ export default {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     height: 100%;
-    min-height: 100%;
-    #navigation{
-      /*width: 250px!important;*/
+    max-height: 100%;
+    #app_navigation{
+      height: 61px!important;
       background: #4A524F;
     }
-    #main{
-      padding: 0;
-      height: 100%;
-      display: block;
+    #app_main{
+      height: calc(100% - 61px) !important;
+      max-height: calc(100% - 61px) !important;
+      overflow-y: auto;
+    }
+    .clearfix{
+      clear:both
     }
   }
 </style>
