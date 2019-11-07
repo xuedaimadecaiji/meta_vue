@@ -1,16 +1,16 @@
 <template>
   <el-row class="Navigation">
-    <el-col :span="4">
+    <el-col :span="3">
       <router-link :to="{name: 'HomeIndex'}">
         <i class="fa fa-fw fa-home" style="font-size: larger"></i> 基础工艺数据库
       </router-link>
     </el-col>
-    <el-col :span="12">
+    <el-col :span="18">
       <router-link v-for="item in navListLeft" :key="item.index" :to="{name: item['name']}">
         <i :class="'fa fa-fw fa-' + item['icon']"></i> {{item['title']}}
       </router-link>
     </el-col>
-    <el-col :span="5" style="text-align: right">
+    <el-col :span="3" style="text-align: right">
       <el-dropdown v-if="auth">
         <router-link class="el-dropdown-link"  :to="{name: 'PersonIndex'}">
           <i class="fa fa-fw fa-user"></i> {{auth['username']}}
@@ -99,8 +99,9 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
   .Navigation{
+    height: 100%;
     a{
       display: inline-block;
       margin: 10px;

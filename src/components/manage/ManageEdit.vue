@@ -8,8 +8,10 @@
       height="600"
       :data="tableList">
       <el-table-column
-        prop="title"
-        label="名称"
+        :prop="column['columnName']"
+        :label="column['columnComment']"
+        v-for="column in tableColumns"
+        :key="column.index"
         width="150">
       </el-table-column>
       <el-table-column
@@ -22,12 +24,13 @@
       </el-table-column>
     </el-table>
     <el-drawer
+      class="manageEditDrawer"
       title="编辑条目"
       :visible.sync="editDrawer"
       :direction="'rtl'"
       :size="'50%'">
       <el-form ref="postForm" v-model="editForm" label-width="100px">
-        <el-form-item prop="title" label="名称" >
+        <el-form-item :prop="item['columnName']" :label="item['columnComment']" v-for="item in tableColumns" :key="item.index">
           <el-input v-model="editForm.title"></el-input>
         </el-form-item>
         <el-form-item>
@@ -60,7 +63,8 @@ export default {
       editDrawer: false,
       deleteDialogVisible: false,
       tableList: [],
-      editForm: {}
+      editForm: {},
+      tableColumns: []
     }
   },
   beforeRouteEnter (to, from, next) {
@@ -69,6 +73,7 @@ export default {
       api.get({url: vm.table}).then(res => {
         vm.tableList = res
       })
+      vm.handleColumns()
     })
   },
   beforeRouteUpdate (to, from, next) {
@@ -76,9 +81,17 @@ export default {
     api.get({url: this.table}).then(res => {
       this.tableList = res
     })
+    this.handleColumns()
     next()
   },
   methods: {
+    handleColumns () {
+      this.$store.state.systemTable.forEach(table => {
+        if (table['tableName'] === this.table) {
+          this.tableColumns = table['systemColumnList']
+        }
+      })
+    },
     handleSubmit () {
       if (this.editForm['id']) {
         api.post({url: this.table, params: this.editForm}).then(res => {
@@ -91,14 +104,11 @@ export default {
       }
     },
     handleEditDrawer (row) {
-      // 暂时关闭权限
-      this.$message.warning('暂时关闭编辑功能')
-      return false
-      // this.editForm = {}
-      // if (row) {
-      //   this.editForm = row
-      // }
-      // this.editDrawer = true
+      this.editForm = {}
+      if (row) {
+        this.editForm = row
+      }
+      this.editDrawer = true
     },
     handleDeleteDialog (row) {
       this.editForm = row
@@ -114,6 +124,17 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style lang="scss">
+  .manageEditDrawer{
+    .el-drawer__body{
+      height: 100px !important;
+      form{
+        height: 100% !important;
+        overflow-y: auto!important;
+      }
+    }
+  }
+  .ManageEdit{
+    padding: 20px;
+  }
 </style>

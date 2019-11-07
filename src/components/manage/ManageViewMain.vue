@@ -1,7 +1,7 @@
 <template>
   <el-container class="ManageViewMain">
     <el-aside>
-      <Navigation></Navigation>
+      <LeftNavigation></LeftNavigation>
     </el-aside>
     <el-main>
       <router-view></router-view>
@@ -10,24 +10,25 @@
 </template>
 
 <script>
-import Navigation from './widgets/Navigation'
+import LeftNavigation from './widgets/LeftNavigation'
 export default {
   name: 'ManageViewMain',
   components: {
-    Navigation
+    LeftNavigation
   }
 }
 </script>
 
 <style lang="scss">
   .ManageViewMain{
-    height: 100% !important;
+    height: 100%;
+    max-height: 100%;
     .el-aside{
       width: 250px!important;
     }
     .el-main{
-      height: 100%;
-      overflow-y: auto!important;
+      max-height: 100%;
+      overflow-y: auto;
     }
   }
 </style>

@@ -24,6 +24,8 @@ a{
   height: 100%;
   .el-header, .el-main, .el-footer{
     height: fit-content!important;
+    padding: 0!important;
+    margin: 0!important;
   }
   .el-header{
     height: fit-content!important;
@@ -38,7 +40,6 @@ a{
 #nprogress .bar {
   background: gold !important; //自定义颜色
 }
-
 .SceneDetailDrawer{
   .el-drawer__body{
     height: 100% !important;
