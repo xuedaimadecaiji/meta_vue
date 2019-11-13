@@ -8,11 +8,7 @@
       height="600"
       :data="tableList">
       <el-table-column
-<<<<<<< .mine
-
-=======
         :fixed="true"
->>>>>>> .theirs
         label="操作"
         width="100">
         <template slot-scope="scope">
@@ -21,11 +17,17 @@
         </template>
       </el-table-column>
       <el-table-column
-        :prop="column['columnName']"
         :label="column['columnComment']"
         v-for="column in tableColumns"
         :key="column.index"
         width="150">
+        <template slot-scope="scope">
+          {{((column['columnKey'] === 'MUL') && (scope.row[column['columnName']] !== null)) ?
+          ((scope.row[column['columnName'].substring(0, column['columnName'].length - 2)] === null) ||
+            (scope.row[column['columnName'].substring(0, column['columnName'].length - 2)] === undefined) ?
+           'null' : scope.row[column['columnName'].substring(0, column['columnName'].length - 2)]['title'])
+           : scope.row[column['columnName']]}}
+        </template>
       </el-table-column>
     </el-table>
     <el-drawer
@@ -35,15 +37,19 @@
       :direction="'rtl'"
       :size="'50%'">
       <el-form ref="postForm" v-model="editForm" label-width="150px">
-<<<<<<< .mine
-        <el-form-item :prop="item['columnName']" :label="item['columnComment']"
+        <el-form-item :prop="item['columnName']" :label="item['columnComment']" v-show="item['columnName'] !== 'id'"
          v-for="item in tableColumns" :key="item.index">
-          <el-input :disabled="item['columnName'] === 'id'" v-model="editForm[item['columnName']]" :type="item['dataType'] === 'int' ? 'number' : 'text'"></el-input>
-=======
-        <el-form-item :prop="item['columnName']" :label="item['columnComment']" v-for="item in tableColumns" :key="item.index">
-          <el-input v-model="editForm[item['columnName']]" :type="item['dataType'] === 'int' ? 'number' : 'text'"
-           :disabled="item['columnName'] === 'id'"></el-input>
->>>>>>> .theirs
+          <el-input v-if="item['columnKey'] !== 'MUL'" v-model="editForm[item['columnName']]"
+           :type="item['dataType'] === 'int' ? 'number' : 'text'">
+          </el-input>
+          <el-select v-if="item['columnKey'] === 'MUL'"  v-model="editForm[item['columnName']]" filterable placeholder="请选择">
+            <el-option
+              v-for="item in baseTableMap[item['columnName']]"
+              :key="item.id"
+              :label="item['title']"
+              :value="item.id">
+            </el-option>
+          </el-select>
         </el-form-item>
         <el-form-item>
           <el-button type="success" @click="handleSubmit">
@@ -69,6 +75,11 @@
 import api from 'api'
 export default {
   name: 'ManageEdit',
+  computed: {
+    baseTableMap () {
+      return this.$store.state.baseTableMap
+    }
+  },
   data () {
     return {
       tableName: 'tableName',
@@ -82,28 +93,33 @@ export default {
   beforeRouteEnter (to, from, next) {
     next(vm => {
       vm.tableName = to.params['table']
-      api.get({url: vm.tableName}).then(res => {
-        vm.tableList = res
-      })
+      // 取消网络请求，直接从store中读取基础数据，注意键需要加上‘_id’
+      vm.tableList = vm.$store.state.baseTableMap[vm.handleTableFormat(vm.tableName)]
       vm.handleColumns()
       vm.initEditForm()
     })
   },
   beforeRouteUpdate (to, from, next) {
     this.tableName = to.params['table']
-    api.get({url: this.tableName}).then(res => {
-      this.tableList = res
-    })
+    this.tableList = this.$store.state.baseTableMap[this.handleTableFormat(this.tableName)]
     this.handleColumns()
-    this.makeEditForm()
+    this.initEditForm()
     next()
   },
   methods: {
-    makeEditForm () {
+    initEditForm () {
       this.editForm = {}
       this.tableColumns.forEach(item => {
         this.editForm[item['columnName']] = ''
       })
+    },
+    handleTableFormat (str) {
+      let temp = ''
+      str.split('_').forEach(item => {
+        temp += item.slice(0, 1).toUpperCase() + item.slice(1)
+      })
+      temp = temp.slice(0, 1).toLowerCase() + temp.slice(1) + 'Id'
+      return temp
     },
     handleColumns () {
       this.$store.state.systemTable.forEach(table => {
@@ -113,7 +129,6 @@ export default {
       })
     },
     handleSubmit () {
-      // this.editForm['id'] 为undefined时，提交post，否则提交put
       if (this.editForm['id'] === undefined) {
         api.post({url: this.table, params: this.editForm}).then(res => {
           history.go(0)
