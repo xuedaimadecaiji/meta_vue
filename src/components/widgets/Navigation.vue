@@ -50,7 +50,7 @@ export default {
   },
   data () {
     return {
-      title: '数据库',
+      title: '工艺数据库',
       navListLeft: [
         {
           title: '工艺场景',

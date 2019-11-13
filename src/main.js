@@ -38,29 +38,9 @@ function beforeEachFunc () {
       store.commit('setSystemTable', res)
     })
   }
-  if (store.state.material === null) {
-    api.get({url: 'material'}).then(res => {
-      store.commit('setMaterial', res)
-    })
-  }
-  if (store.state.energy === null) {
-    api.get({url: 'energy'}).then(res => {
-      store.commit('setEnergy', res)
-    })
-  }
-  if (store.state.device === null) {
-    api.get({url: 'device'}).then(res => {
-      store.commit('setDevice', res)
-    })
-  }
-  if (store.state.envLoad === null) {
-    api.get({url: 'env_load'}).then(res => {
-      store.commit('setEnvLoad', res)
-    })
-  }
-  if (store.state.unit === null) {
-    api.get({url: 'unit'}).then(res => {
-      store.commit('setUnit', res)
+  if (store.state.baseTableMap === null) {
+    api.get({url: 'categories/all'}).then(res => {
+      store.commit('setBaseTableMap', res)
     })
   }
 }

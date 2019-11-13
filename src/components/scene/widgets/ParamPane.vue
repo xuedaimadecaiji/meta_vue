@@ -4,7 +4,7 @@
     <el-button
       v-if="editable" type="primary" size="medium" @click="postParamDataDrawer = true">
       <i class="fa fa-fw fa-plus-circle"></i>
-      添加参数
+      添加关键工艺参数
     </el-button>
     <el-divider v-if="editable"></el-divider>
     <el-table

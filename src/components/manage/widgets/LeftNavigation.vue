@@ -5,7 +5,7 @@
         <span><i :class="'fa fa-fw fa-' + sub.icon"></i> &nbsp;{{sub.title}}</span>
       </div>
       <router-link :to="{name: 'ManageEdit', params: {table: item['tableName']}}"
-                   v-for="item in systemTable" :key="item.index" v-if="item['tableComment'].split('_')[0] === sub.title">
+                   v-for="item in systemTable" :key="item.index" v-show="item['tableComment'].split('_')[0] === sub.title">
         {{item['tableComment'].split('_')[1]}}
       </router-link>
     </el-card>

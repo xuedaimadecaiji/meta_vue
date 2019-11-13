@@ -6,7 +6,6 @@ export default new Vuex.Store({
     default: {
       'user_background': 'http://cselife.oss-cn-beijing.aliyuncs.com/img/sys/user/profile_background.jpg'
     },
-    // root: 'http://114.115.238.65:8000/',
     // root: 'http://114.115.238.65/api/',
     root: 'http://localhost:8000/api/manage/',
     // root: 'http://192.168.1.103:8000/api/manage/',
@@ -20,34 +19,16 @@ export default new Vuex.Store({
     metadata: JSON.parse(localStorage.getItem('metadata')) || null,
     systemTable: JSON.parse(localStorage.getItem('systemTable')) || null,
     categories: JSON.parse(localStorage.getItem('categories')) || null,
-    material: JSON.parse(localStorage.getItem('material')) || null,
-    parameter: JSON.parse(localStorage.getItem('parameter')) || null,
-    other: JSON.parse(localStorage.getItem('other')) || null,
-    energy: JSON.parse(localStorage.getItem('energy')) || null,
-    device: JSON.parse(localStorage.getItem('device')) || null,
-    envLoad: JSON.parse(localStorage.getItem('envLoad')) || null,
-    unit: JSON.parse(localStorage.getItem('unit')) || null
+    baseTableMap: JSON.parse(localStorage.getItem('baseTableMap')) || null
   },
   mutations: {
     clear (state) {
       localStorage.removeItem('systemTable')
       localStorage.removeItem('categories')
-      localStorage.removeItem('material')
-      localStorage.removeItem('parameter')
-      localStorage.removeItem('other')
-      localStorage.removeItem('energy')
-      localStorage.removeItem('device')
-      localStorage.removeItem('envLoad')
-      localStorage.removeItem('unit')
+      localStorage.removeItem('baseTableMap')
       state.systemTable = null
       state.categories = null
-      state.material = null
-      state.parameter = null
-      state.other = null
-      state.energy = null
-      state.device = null
-      state.envLoad = null
-      state.unit = null
+      state.baseTableMap = null
     },
     setSystemTime (state) {
       localStorage.setItem('systemTime', JSON.stringify(new Date().getTime()))
@@ -61,62 +42,6 @@ export default new Vuex.Store({
       localStorage.removeItem('systemTable')
       state.systemTable = null
     },
-    setMaterial (state, material) {
-      localStorage.setItem('material', JSON.stringify(material))
-      state.material = JSON.parse(localStorage.getItem('material'))
-    },
-    removeMaterial (state) {
-      localStorage.removeItem('material')
-      state.material = null
-    },
-    setEnergy (state, energy) {
-      localStorage.setItem('energy', JSON.stringify(energy))
-      state.energy = JSON.parse(localStorage.getItem('energy'))
-    },
-    removeEnergy (state) {
-      localStorage.removeItem('energy')
-      state.energy = null
-    },
-    setParam (state, parameter) {
-      localStorage.setItem('parameter', JSON.stringify(parameter))
-      state.parameter = JSON.parse(localStorage.getItem('parameter'))
-    },
-    removeParam (state) {
-      localStorage.removeItem('parameter')
-      state.parameter = null
-    },
-    setOther (state, other) {
-      localStorage.setItem('other', JSON.stringify(other))
-      state.other = JSON.parse(localStorage.getItem('other'))
-    },
-    removeOther (state) {
-      localStorage.removeItem('other')
-      state.other = null
-    },
-    setDevice (state, device) {
-      localStorage.setItem('device', JSON.stringify(device))
-      state.device = JSON.parse(localStorage.getItem('device'))
-    },
-    removeDevice (state) {
-      localStorage.removeItem('device')
-      state.device = null
-    },
-    setEnvLoad (state, envLoad) {
-      localStorage.setItem('envLoad', JSON.stringify(envLoad))
-      state.envLoad = JSON.parse(localStorage.getItem('envLoad'))
-    },
-    removeEnvLoad (state) {
-      localStorage.removeItem('envLoad')
-      state.envLoad = null
-    },
-    setUnit (state, unit) {
-      localStorage.setItem('unit', JSON.stringify(unit))
-      state.unit = JSON.parse(localStorage.getItem('unit'))
-    },
-    removeUnit (state) {
-      localStorage.removeItem('unit')
-      state.unit = null
-    },
     setCategories (state, categories) {
       localStorage.setItem('categories', JSON.stringify(categories))
       state.categories = JSON.parse(localStorage.getItem('categories'))
@@ -124,6 +49,14 @@ export default new Vuex.Store({
     removeCategories (state) {
       localStorage.removeItem('categories')
       state.categories = null
+    },
+    setBaseTableMap (state, baseTableMap) {
+      localStorage.setItem('baseTableMap', JSON.stringify(baseTableMap))
+      state.baseTableMap = JSON.parse(localStorage.getItem('baseTableMap'))
+    },
+    removeBaseTableMap (state) {
+      localStorage.removeItem('baseTableMap')
+      state.baseTableMap = null
     },
     setMetadata (state, metadata) {
       localStorage.setItem('metadata', JSON.stringify(metadata))

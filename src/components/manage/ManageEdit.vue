@@ -8,6 +8,11 @@
       height="600"
       :data="tableList">
       <el-table-column
+<<<<<<< .mine
+
+=======
+        :fixed="true"
+>>>>>>> .theirs
         label="操作"
         width="100">
         <template slot-scope="scope">
@@ -29,10 +34,16 @@
       :visible.sync="editDrawer"
       :direction="'rtl'"
       :size="'50%'">
-      <el-form ref="postForm" v-model="editForm" label-width="100px">
+      <el-form ref="postForm" v-model="editForm" label-width="150px">
+<<<<<<< .mine
         <el-form-item :prop="item['columnName']" :label="item['columnComment']"
          v-for="item in tableColumns" :key="item.index">
           <el-input :disabled="item['columnName'] === 'id'" v-model="editForm[item['columnName']]" :type="item['dataType'] === 'int' ? 'number' : 'text'"></el-input>
+=======
+        <el-form-item :prop="item['columnName']" :label="item['columnComment']" v-for="item in tableColumns" :key="item.index">
+          <el-input v-model="editForm[item['columnName']]" :type="item['dataType'] === 'int' ? 'number' : 'text'"
+           :disabled="item['columnName'] === 'id'"></el-input>
+>>>>>>> .theirs
         </el-form-item>
         <el-form-item>
           <el-button type="success" @click="handleSubmit">
@@ -60,7 +71,7 @@ export default {
   name: 'ManageEdit',
   data () {
     return {
-      table: 'tableName',
+      tableName: 'tableName',
       editDrawer: false,
       deleteDialogVisible: false,
       tableList: [],
@@ -70,17 +81,17 @@ export default {
   },
   beforeRouteEnter (to, from, next) {
     next(vm => {
-      vm.table = to.params['table']
-      api.get({url: vm.table}).then(res => {
+      vm.tableName = to.params['table']
+      api.get({url: vm.tableName}).then(res => {
         vm.tableList = res
       })
       vm.handleColumns()
-      vm.makeEditForm()
+      vm.initEditForm()
     })
   },
   beforeRouteUpdate (to, from, next) {
-    this.table = to.params['table']
-    api.get({url: this.table}).then(res => {
+    this.tableName = to.params['table']
+    api.get({url: this.tableName}).then(res => {
       this.tableList = res
     })
     this.handleColumns()
@@ -96,7 +107,7 @@ export default {
     },
     handleColumns () {
       this.$store.state.systemTable.forEach(table => {
-        if (table['tableName'] === this.table) {
+        if (table['tableName'] === this.tableName) {
           this.tableColumns = table['systemColumnList']
         }
       })

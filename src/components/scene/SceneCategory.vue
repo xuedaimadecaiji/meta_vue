@@ -137,17 +137,8 @@
             </el-card>
           </el-aside>
           <el-main>
-            <MaterialPane :scene="selectScene" :editable="false"></MaterialPane>
-            <br>
-            <EnergyPane :scene="selectScene" :editable="false"></EnergyPane>
-            <br>
-            <ParamPane :scene="selectScene" :editable="false"></ParamPane>
-            <br>
-            <OtherPane :scene="selectScene" :editable="false"></OtherPane>
-            <br>
-            <DevicePane :scene="selectScene" :editable="false"></DevicePane>
-            <br>
-            <EnvLoadPane :scene="selectScene" :editable="false"></EnvLoadPane>
+            <Pane :scene="selectScene" :editable="false" :label="item.label" v-for="item in tabPaneList" :key="item.index"></Pane>
+            <br><br><br>
           </el-main>
         </el-container>
       </el-drawer>
@@ -157,21 +148,11 @@
 
 <script>
 import api from 'api'
-import MaterialPane from './widgets/MaterialPane'
-import EnergyPane from './widgets/EnergyPane'
-import EnvLoadPane from './widgets/EnvLoadPane'
-import ParamPane from './widgets/ParamPane'
-import OtherPane from './widgets/OtherPane'
-import DevicePane from './widgets/DevicePane'
+import Pane from './widgets/Pane'
 export default {
   name: 'SceneCategory',
   components: {
-    MaterialPane,
-    EnvLoadPane,
-    EnergyPane,
-    DevicePane,
-    ParamPane,
-    OtherPane
+    Pane
   },
   computed: {
     categories () {
@@ -180,6 +161,33 @@ export default {
   },
   data () {
     return {
+      tabPaneList: [
+        {
+          label: '物料数据',
+          name: '1',
+          tableName: 'material_data'
+        },
+        {
+          label: '能源数据',
+          name: '2',
+          tableName: 'energy_data'
+        },
+        {
+          label: '关键工艺参数',
+          name: '3',
+          tableName: 'material_data'
+        },
+        {
+          label: '设备数据',
+          name: '4',
+          tableName: 'device_data'
+        },
+        {
+          label: '环境负荷数据',
+          name: '5',
+          tableName: 'env_load_data'
+        }
+      ],
       postCategoryList: [],
       selectScene: {
         category: {}
