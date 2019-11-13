@@ -143,8 +143,8 @@
             <br>
             <ParamPane :scene="selectScene" :editable="false"></ParamPane>
             <br>
-            <OtherPane :scene="selectScene" :editable="false"></OtherPane>
-            <br>
+            <!-- <OtherPane :scene="selectScene" :editable="false"></OtherPane>
+            <br> -->
             <DevicePane :scene="selectScene" :editable="false"></DevicePane>
             <br>
             <EnvLoadPane :scene="selectScene" :editable="false"></EnvLoadPane>

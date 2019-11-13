@@ -3,7 +3,7 @@
     <h2 v-if="!editable">设备数据</h2>
     <el-button v-if="editable" type="primary" size="medium" @click="postDeviceDataDrawer = true">
       <i class="fa fa-fw fa-plus-circle"></i>
-      添加设备
+      添加设备数据
     </el-button>
     <el-drawer
       v-if="editable"

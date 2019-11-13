@@ -4,7 +4,7 @@
     <el-button
       v-if="editable" type="primary" size="medium" @click="postEnergyDataDrawer = true">
       <i class="fa fa-fw fa-plus-circle"></i>
-      添加能源
+      添加能源数据
     </el-button>
     <el-divider v-if="editable"></el-divider>
     <el-drawer

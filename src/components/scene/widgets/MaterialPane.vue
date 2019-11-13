@@ -4,7 +4,7 @@
     <el-button
       v-if="editable" type="primary" size="medium" @click="postMaterialDataDrawer = true">
       <i class="fa fa-fw fa-plus-circle"></i>
-      添加物料
+      添加物料数据
     </el-button>
     <el-drawer
       v-if="editable"

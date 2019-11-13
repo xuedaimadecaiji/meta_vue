@@ -27,26 +27,8 @@
     </el-aside>
     <el-main>
       <el-tabs v-model="activeName">
-        <el-tab-pane label="物料数据" name="1">
-          <MaterialPane :scene="postSceneForm"></MaterialPane>
-        </el-tab-pane>
-        <el-tab-pane label="能源数据" name="2">
-          <EnergyPane :scene="postSceneForm"></EnergyPane>
-        </el-tab-pane>
-        <el-tab-pane label="关键参数" name="3">
-          <ParamPane :scene="postSceneForm"></ParamPane>
-        </el-tab-pane>
-        <el-tab-pane label="其他" name="4">
-          <OtherPane :scene="postSceneForm"></OtherPane>
-        </el-tab-pane>
-        <el-tab-pane label="设备数据" name="5">
-          <DevicePane :scene="postSceneForm"></DevicePane>
-        </el-tab-pane>
-        <el-tab-pane label="环境负荷数据" name="6">
-          <EnvLoadPane :scene="postSceneForm"></EnvLoadPane>
-        </el-tab-pane>
-        <el-tab-pane label="IPO 可视化" name="7">
-          <IPOPlane></IPOPlane>
+        <el-tab-pane v-for="item in tabPaneList" :key="item.index" :label="item.label" :name="item.name">
+          <pane :scene="postSceneForm" :tableName="item.tableName" :label="item.label"></pane>
         </el-tab-pane>
       </el-tabs>
     </el-main>
@@ -55,23 +37,11 @@
 
 <script>
 import api from 'api'
-import MaterialPane from './widgets/MaterialPane'
-import EnergyPane from './widgets/EnergyPane'
-import DevicePane from './widgets/DevicePane'
-import EnvLoadPane from './widgets/EnvLoadPane'
-import ParamPane from './widgets/ParamPane'
-import OtherPane from './widgets/OtherPane'
-import IPOPlane from './widgets/IPOPlane'
+import pane from './widgets/Pane'
 export default {
   name: 'SceneEdit',
   components: {
-    MaterialPane,
-    EnergyPane,
-    DevicePane,
-    EnvLoadPane,
-    ParamPane,
-    OtherPane,
-    IPOPlane
+    pane
   },
   computed: {
     categories () {
@@ -80,6 +50,33 @@ export default {
   },
   data () {
     return {
+      tabPaneList: [
+        {
+          label: '物料数据',
+          name: '1',
+          tableName: 'material_data'
+        },
+        {
+          label: '能源数据',
+          name: '2',
+          tableName: 'energy_data'
+        },
+        {
+          label: '关键工艺参数',
+          name: '3',
+          tableName: 'material_data'
+        },
+        {
+          label: '设备数据',
+          name: '4',
+          tableName: 'device_data'
+        },
+        {
+          label: '环境负荷数据',
+          name: '5',
+          tableName: 'env_load_data'
+        }
+      ],
       categoryList: [],
       activeName: '1',
       postCategoryList: [],
@@ -160,7 +157,7 @@ export default {
       width: 30%!important;
       border-right: solid 1px #ccc;
     }
-    .el-main{
+    .el-tabs{
       padding: 10px 20px!important;
     }
   }

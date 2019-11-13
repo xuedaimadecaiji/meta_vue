@@ -62,14 +62,14 @@ export default {
   beforeRouteEnter (to, from, next) {
     next(vm => {
       vm.content = to.query['content'] ? to.query['content'] : ''
-      api.get({url: 'users/search', params: {content: vm.content}}).then(res => {
+      api.get({url: 'user/search', params: {content: vm.content}}).then(res => {
         vm.userList = res
       })
     })
   },
   beforeRouteUpdate (to, from, next) {
     this.content = to.query['content'] ? to.query['content'] : ''
-    api.get({url: 'users/search', params: {content: this.content}}).then(res => {
+    api.get({url: 'user/search', params: {content: this.content}}).then(res => {
       this.userList = res
     })
     next()

@@ -1,12 +1,15 @@
 <template>
-  <div class="ManageEdit">
-    <el-button type="primary" @click="handleEditDrawer(null)">
-      <i class="fa fa-plus-circle fa-fw"></i> 添加新条目
+  <div class="Pane">
+    <h2 v-if="!editable">{{label}}</h2>
+    <el-button
+      v-if="editable" type="primary" size="medium" @click="handleEditDrawer(null)">
+      <i class="fa fa-fw fa-plus-circle"></i>
+      添加{{label}}
     </el-button>
-    <el-divider></el-divider>
+    <el-divider v-if="editable"></el-divider>
     <el-table
       height="600"
-      :data="tableList">
+      :data="scene['materialDataList']">
       <el-table-column
         :fixed="true"
         label="操作"
@@ -25,12 +28,13 @@
       </el-table-column>
     </el-table>
     <el-drawer
-      class="manageEditDrawer"
-      title="编辑条目"
+      class="paneEditDrawer"
+      v-if="editable"
+      :title="'新增' + label"
       :visible.sync="editDrawer"
       :direction="'rtl'"
       :size="'50%'">
-      <el-form ref="postForm" v-model="editForm" label-width="150px">
+      <el-form ref="editForm" :model="editForm" label-width="150px">
         <el-form-item :prop="item['columnName']" :label="item['columnComment']" v-for="item in tableColumns" :key="item.index">
           <el-input v-model="editForm[item['columnName']]" :type="item['dataType'] === 'int' ? 'number' : 'text'"
            :disabled="item['columnName'] === 'id'"></el-input>
@@ -42,59 +46,51 @@
         </el-form-item>
       </el-form>
     </el-drawer>
-    <el-dialog
-      title="提示"
-      :visible.sync="deleteDialogVisible"
-      width="400px">
-      <span>确定删除？</span>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="deleteDialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="handleDelete">确 定</el-button>
-      </span>
-    </el-dialog>
   </div>
 </template>
-
 <script>
 import api from 'api'
 export default {
-  name: 'ManageEdit',
+  name: 'Pane',
+  props: {
+    scene: {
+      type: Object
+    },
+    editable: {
+      type: Boolean,
+      default: true
+    },
+    tableName: {
+      type: String,
+      default: 'material_data'
+    },
+    label: {
+      type: String,
+      default: '物料数据'
+    }
+  },
+  watch: {
+    tableName: {
+      immediate: true, // 很重要！！！，必须叫handler
+      handler (val) {
+        this.$store.state.systemTable.forEach(table => {
+          if (table['tableName'] === this.tableName) {
+            this.tableColumns = table['systemColumnList']
+          }
+        })
+      }
+    }
+  },
   data () {
     return {
-      tableName: 'tableName',
-      editDrawer: false,
       deleteDialogVisible: false,
-      tableList: [],
+      editDrawer: false,
       editForm: {},
       tableColumns: []
     }
   },
-  beforeRouteEnter (to, from, next) {
-    next(vm => {
-      vm.tableName = to.params['table']
-      api.get({url: vm.tableName}).then(res => {
-        vm.tableList = res
-      })
-      vm.handleColumns()
-      vm.initEditForm()
-    })
-  },
-  beforeRouteUpdate (to, from, next) {
-    this.tableName = to.params['table']
-    api.get({url: this.tableName}).then(res => {
-      this.tableList = res
-    })
-    this.handleColumns()
-    this.initEditForm()
-    next()
-  },
   methods: {
-    initEditForm () {
-      this.editForm = {}
-      this.tableColumns.forEach(item => {
-        this.editForm[item['columnName']] = ''
-      })
-    },
+    test () {},
     handleColumns () {
       this.$store.state.systemTable.forEach(table => {
         if (table['tableName'] === this.tableName) {
@@ -104,11 +100,11 @@ export default {
     },
     handleSubmit () {
       if (this.editForm['id'] === undefined) {
-        api.post({url: this.table, params: this.editForm}).then(res => {
+        api.post({url: this.tableName, params: this.editForm}).then(res => {
           history.go(0)
         })
       } else {
-        api.put({url: this.table, params: this.editForm}).then(res => {
+        api.put({url: this.tableName, params: this.editForm}).then(res => {
           history.go(0)
         })
       }
@@ -123,19 +119,12 @@ export default {
     handleDeleteDialog (row) {
       this.editForm = row
       this.deleteDialogVisible = true
-    },
-    handleDelete () {
-      api.delete({url: this.table + '/' + this.editForm['id']}).then(res => {
-        // remove
-        history.go(0)
-      })
     }
   }
 }
 </script>
-
-<style lang="scss">
-  .manageEditDrawer{
+<style lang=scss>
+  .paneEditDrawer{
     .el-drawer__body{
       height: 100px !important;
       form{
@@ -143,8 +132,5 @@ export default {
         overflow-y: auto!important;
       }
     }
-  }
-  .ManageEdit{
-    padding: 20px;
   }
 </style>

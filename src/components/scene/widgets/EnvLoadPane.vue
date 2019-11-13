@@ -4,7 +4,7 @@
     <el-button
       v-if="editable" type="primary" size="medium" @click="postEnvLoadDataDrawer = true">
       <i class="fa fa-fw fa-plus-circle"></i>
-      添加环境负荷
+      添加环境负荷数据
     </el-button>
     <el-drawer
       v-if="editable"

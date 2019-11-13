@@ -65,7 +65,7 @@ export default {
     submitForm (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          api.get({url: 'users/1'}).then(res => {
+          api.get({url: 'user/1'}).then(res => {
             this.$store.commit('login', res)
             this.$router.push({name: 'HomeIndex'})
           })
