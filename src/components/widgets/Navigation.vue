@@ -2,7 +2,7 @@
   <el-row class="Navigation">
     <el-col :span="3">
       <router-link :to="{name: 'HomeIndex'}">
-        <i class="fa fa-fw fa-home" style="font-size: larger"></i> 基础工艺数据库
+        <i class="fa fa-fw fa-home" style="font-size: larger"></i> {{title}}
       </router-link>
     </el-col>
     <el-col :span="18">
@@ -50,7 +50,7 @@ export default {
   },
   data () {
     return {
-      title: '基础工艺数据库',
+      title: '数据库',
       navListLeft: [
         {
           title: '工艺场景',

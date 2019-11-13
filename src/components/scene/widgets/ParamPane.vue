@@ -1,6 +1,6 @@
 <template>
   <div class="ParamPane">
-    <h2 v-if="!editable">参数数据</h2>
+    <h2 v-if="!editable">关键参数数据</h2>
     <el-button
       v-if="editable" type="primary" size="medium" @click="postParamDataDrawer = true">
       <i class="fa fa-fw fa-plus-circle"></i>

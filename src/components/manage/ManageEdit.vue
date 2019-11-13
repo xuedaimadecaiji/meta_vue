@@ -8,19 +8,19 @@
       height="600"
       :data="tableList">
       <el-table-column
-        :prop="column['columnName']"
-        :label="column['columnComment']"
-        v-for="column in tableColumns"
-        :key="column.index"
-        width="150">
-      </el-table-column>
-      <el-table-column
         label="操作"
         width="100">
         <template slot-scope="scope">
           <el-button @click="handleEditDrawer(scope.row)" type="text" size="small">编辑</el-button>
           <el-button @click="handleDeleteDialog(scope.row)" type="text" size="small">删除</el-button>
         </template>
+      </el-table-column>
+      <el-table-column
+        :prop="column['columnName']"
+        :label="column['columnComment']"
+        v-for="column in tableColumns"
+        :key="column.index"
+        width="150">
       </el-table-column>
     </el-table>
     <el-drawer
@@ -30,8 +30,9 @@
       :direction="'rtl'"
       :size="'50%'">
       <el-form ref="postForm" v-model="editForm" label-width="100px">
-        <el-form-item :prop="item['columnName']" :label="item['columnComment']" v-for="item in tableColumns" :key="item.index">
-          <el-input v-model="editForm.title"></el-input>
+        <el-form-item :prop="item['columnName']" :label="item['columnComment']"
+         v-for="item in tableColumns" :key="item.index">
+          <el-input :disabled="item['columnName'] === 'id'" v-model="editForm[item['columnName']]" :type="item['dataType'] === 'int' ? 'number' : 'text'"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button type="success" @click="handleSubmit">
@@ -74,6 +75,7 @@ export default {
         vm.tableList = res
       })
       vm.handleColumns()
+      vm.makeEditForm()
     })
   },
   beforeRouteUpdate (to, from, next) {
@@ -82,9 +84,16 @@ export default {
       this.tableList = res
     })
     this.handleColumns()
+    this.makeEditForm()
     next()
   },
   methods: {
+    makeEditForm () {
+      this.editForm = {}
+      this.tableColumns.forEach(item => {
+        this.editForm[item['columnName']] = ''
+      })
+    },
     handleColumns () {
       this.$store.state.systemTable.forEach(table => {
         if (table['tableName'] === this.table) {
@@ -93,7 +102,8 @@ export default {
       })
     },
     handleSubmit () {
-      if (this.editForm['id']) {
+      // this.editForm['id'] 为undefined时，提交post，否则提交put
+      if (this.editForm['id'] === undefined) {
         api.post({url: this.table, params: this.editForm}).then(res => {
           history.go(0)
         })

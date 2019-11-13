@@ -8,7 +8,7 @@
       <el-col :span="24">
         <h3>{{sub.title}}</h3>
       </el-col>
-      <el-col :span="6" v-for="item in systemTable" :key="item.index" v-if="item['tableComment'].split('_')[0] === sub.title">
+      <el-col :span="6" v-for="item in systemTable" :key="item.index" v-show="item['tableComment'].split('_')[0] === sub.title">
         <router-link :to="{name: 'ManageEdit', params: {table: item['tableName']}}" >
           <el-card always="always">
             {{item['tableComment'].split('_')[1]}}
