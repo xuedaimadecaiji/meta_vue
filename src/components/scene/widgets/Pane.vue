@@ -44,7 +44,7 @@
         <el-form-item :prop="item['columnName']" :label="item['columnComment']"  v-show="item['columnName'] !== 'id'"
          v-for="item in tableColumns" :key="item.index">
           <el-input v-if="item['columnKey'] !== 'MUL'" v-model="editForm[item['columnName']]"
-           :type="item['dataType'] === 'int' ? 'number' : 'text'">
+           :type="item['dataType'] === 'int' ? 'number' : 'textarea'">
           </el-input>
           <el-select v-if="item['columnKey'] === 'MUL'"  v-model="editForm[item['columnName']]" filterable placeholder="请选择">
             <el-option
@@ -125,10 +125,9 @@ export default {
           history.go(0)
         })
       } else {
-        console.log(this.editForm)
-        // api.put({url: this.tableName, params: this.editForm}).then(res => {
-          // history.go(0)
-        // })
+        api.put({url: this.tableName, params: this.editForm}).then(res => {
+          history.go(0)
+        })
       }
     },
     handleEditDrawer (row) {
@@ -150,6 +149,7 @@ export default {
     .el-drawer__body{
       height: 100px !important;
       form{
+        padding: 0 20px!important;
         height: 100% !important;
         overflow-y: auto!important;
       }
