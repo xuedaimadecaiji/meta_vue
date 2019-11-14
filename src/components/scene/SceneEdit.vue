@@ -95,7 +95,7 @@ export default {
       vm.postSceneForm.id = to.params['sceneId']
       api.get({url: 'sceneData\\' + to.params['sceneId']}).then(result => {
         vm.postSceneForm = result
-        api.get({url: 'system/categories'}).then(res => {
+        api.get({url: 'category'}).then(res => {
           vm.categoryList = res
           vm.postCategoryList = []
           vm.postCategoryList.push(vm.categoryList[0]['id'])
@@ -109,7 +109,7 @@ export default {
     let that = this
     api.get({url: 'sceneData\\' + to.params['sceneId']}).then(result => {
       this.postSceneForm = result
-      api.get({url: 'system/categories'}).then(res => {
+      api.get({url: 'category'}).then(res => {
         that.categoryList = res
         that.postCategoryList = []
         that.postCategoryList.push(that.categoryList[0]['id'])
