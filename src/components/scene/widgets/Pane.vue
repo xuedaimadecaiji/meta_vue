@@ -41,19 +41,25 @@
       :direction="'rtl'"
       :size="'50%'">
       <el-form ref="editForm" :model="editForm" label-width="150px">
-        <el-form-item :prop="item['columnName']" :label="item['columnComment']"  v-show="item['columnName'] !== 'id'"
-         v-for="item in tableColumns" :key="item.index">
-          <el-input v-if="item['columnKey'] !== 'MUL'" v-model="editForm[item['columnName']]"
-           :type="item['dataType'] === 'int' ? 'number' : 'textarea'">
+        <el-form-item :prop="column['columnName']" :label="column['columnComment']"  v-show="column['columnName'] !== 'id'"
+         v-for="column in tableColumns" :key="column.index">
+          <el-input v-if="column['columnKey'] !== 'MUL'" v-model="editForm[column['columnName']]"
+           :type="column['dataType'] === 'int' ? 'number' : 'textarea'">
           </el-input>
-          <el-select v-if="item['columnKey'] === 'MUL'"  v-model="editForm[item['columnName']]" filterable placeholder="请选择">
+          <el-select v-if="column['columnKey'] === 'MUL'"  v-model="editForm[column['columnName']]" filterable placeholder="请选择">
             <el-option
-              v-for="item in baseTableMap[item['columnName']]"
+              v-for="item in baseTableMap[column['columnName']]"
               :key="item.id"
               :label="item['title']"
               :value="item.id">
             </el-option>
           </el-select>
+          <span v-if="column['columnKey'] === 'MUL'" class="AddManageDataTips">
+            &nbsp;&nbsp;
+            <router-link :to="{name: 'ManageEdit', params: {table: column['columnName'].substring(0, column['columnName'].length - 2)}}">
+              缺少数据？前往添加
+            </router-link>
+          </span>
         </el-form-item>
         <el-form-item>
           <el-button type="success" @click="handleSubmit">
@@ -152,6 +158,14 @@ export default {
         padding: 0 20px!important;
         height: 100% !important;
         overflow-y: auto!important;
+      }
+    }
+  }
+  .AddManageDataTips{
+    a{
+      color: #aaa;
+      &:hover{
+        text-decoration: underline;
       }
     }
   }
