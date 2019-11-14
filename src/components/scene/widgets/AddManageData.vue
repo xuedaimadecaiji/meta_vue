@@ -8,7 +8,7 @@
         </el-input>
         <el-select v-if="item['columnKey'] === 'MUL'"  v-model="editForm[item['columnName']]" filterable placeholder="请选择">
           <el-option
-            v-for="item in baseTableMap[item['columnName']]"
+            v-for="item in baseTableMap[item['columnName'].substring(0, item['columnName'].length - 2)]"
             :key="item.id"
             :label="item['title']"
             :value="item.id">

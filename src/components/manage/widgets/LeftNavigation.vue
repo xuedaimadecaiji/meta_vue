@@ -28,10 +28,10 @@ export default {
           title: '基础表',
           icon: 'dashboard'
         },
-        {
-          title: '数据表',
-          icon: 'database'
-        },
+        // {
+        //   title: '数据表',
+        //   icon: 'database'
+        // },
         {
           title: '辅助表',
           icon: 'gears'

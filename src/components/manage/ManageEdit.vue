@@ -44,7 +44,7 @@
           </el-input>
           <el-select v-if="item['columnKey'] === 'MUL'"  v-model="editForm[item['columnName']]" filterable placeholder="请选择">
             <el-option
-              v-for="item in baseTableMap[item['columnName']]"
+              v-for="item in baseTableMap[item['columnName'].substring(0, item['columnName'].length - 2)]"
               :key="item.id"
               :label="item['title']"
               :value="item.id">
@@ -94,14 +94,14 @@ export default {
     next(vm => {
       vm.tableName = to.params['table']
       // 取消网络请求，直接从store中读取基础数据，注意键需要加上‘Id’
-      vm.tableList = vm.$store.state.baseTableMap[vm.tableName + 'Id']
+      vm.tableList = vm.$store.state.baseTableMap[vm.tableName]
       vm.handleColumns()
       vm.initEditForm()
     })
   },
   beforeRouteUpdate (to, from, next) {
     this.tableName = to.params['table']
-    this.tableList = this.$store.state.baseTableMap[this.tableName + 'Id']
+    this.tableList = this.$store.state.baseTableMap[this.tableName]
     this.handleColumns()
     this.initEditForm()
     next()
