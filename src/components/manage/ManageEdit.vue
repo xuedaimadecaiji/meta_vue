@@ -93,15 +93,15 @@ export default {
   beforeRouteEnter (to, from, next) {
     next(vm => {
       vm.tableName = to.params['table']
-      // 取消网络请求，直接从store中读取基础数据，注意键需要加上‘_id’
-      vm.tableList = vm.$store.state.baseTableMap[vm.handleTableFormat(vm.tableName) + 'Id']
+      // 取消网络请求，直接从store中读取基础数据，注意键需要加上‘Id’
+      vm.tableList = vm.$store.state.baseTableMap[vm.tableName + 'Id']
       vm.handleColumns()
       vm.initEditForm()
     })
   },
   beforeRouteUpdate (to, from, next) {
     this.tableName = to.params['table']
-    this.tableList = this.$store.state.baseTableMap[this.handleTableFormat(this.tableName) + 'Id']
+    this.tableList = this.$store.state.baseTableMap[this.tableName + 'Id']
     this.handleColumns()
     this.initEditForm()
     next()
@@ -113,16 +113,8 @@ export default {
         this.editForm[item['columnName']] = ''
       })
     },
-    handleTableFormat (str) {
-      let temp = ''
-      str.split('_').forEach(item => {
-        temp += item.slice(0, 1).toUpperCase() + item.slice(1)
-      })
-      temp = temp.slice(0, 1).toLowerCase() + temp.slice(1)
-      return temp
-    },
     handleColumns () {
-      this.tableColumns = this.$store.state.systemTable[this.handleTableFormat(this.tableName)]['systemColumnList']
+      this.tableColumns = this.$store.state.systemTable[this.tableName]['systemColumnList']
     },
     handleSubmit () {
       if (this.editForm['id'] === undefined) {

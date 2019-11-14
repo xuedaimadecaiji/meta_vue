@@ -93,7 +93,7 @@ export default {
   beforeRouteEnter (to, from, next) {
     next(vm => {
       vm.postSceneForm.id = to.params['sceneId']
-      api.get({url: 'scene_data\\' + to.params['sceneId']}).then(result => {
+      api.get({url: 'sceneData\\' + to.params['sceneId']}).then(result => {
         vm.postSceneForm = result
         api.get({url: 'system/categories'}).then(res => {
           vm.categoryList = res
@@ -107,7 +107,7 @@ export default {
   beforeRouteUpdate (to, from, next) {
     this.postSceneForm.id = to.params['sceneId']
     let that = this
-    api.get({url: 'scene_data\\' + to.params['sceneId']}).then(result => {
+    api.get({url: 'sceneData\\' + to.params['sceneId']}).then(result => {
       this.postSceneForm = result
       api.get({url: 'system/categories'}).then(res => {
         that.categoryList = res
@@ -122,7 +122,7 @@ export default {
     handlePut () {
       this.postSceneForm.categoryId = this.postCategoryList[this.postCategoryList.length - 1]
       this.postSceneForm.categoryRootId = this.postCategoryList[1] // 二级分类ID
-      api.put({url: 'scene_data', params: this.postSceneForm}).then(result => {
+      api.put({url: 'sceneData', params: this.postSceneForm}).then(result => {
         if (result > 0) {
           history.go(0)
         } else {

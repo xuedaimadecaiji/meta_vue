@@ -213,12 +213,12 @@ export default {
   },
   beforeRouteEnter (to, from, next) {
     next(vm => {
-      api.get({url: 'scene_data', params: {category: to.query['category'] ? to.query['category'] : ''}}).then(result => {
+      api.get({url: 'sceneData', params: {category: to.query['category'] ? to.query['category'] : ''}}).then(result => {
         vm.sceneList = result
         vm.searchForm.selectCategory = to.query['category'] ? to.query['category'] : ''
       })
       if (to.query['id']) {
-        api.get({url: 'scene_data/' + to.query['id']}).then(res => {
+        api.get({url: 'sceneData/' + to.query['id']}).then(res => {
           vm.selectScene = res
         })
         vm.sceneDetailDrawer = true
@@ -226,12 +226,12 @@ export default {
     })
   },
   beforeRouteUpdate (to, from, next) {
-    api.get({url: 'scene_data', params: {category: to.query['category'] ? to.query['category'] : ''}}).then(result => {
+    api.get({url: 'sceneData', params: {category: to.query['category'] ? to.query['category'] : ''}}).then(result => {
       this.sceneList = result
       this.searchForm.selectCategory = to.query['category'] ? to.query['category'] : ''
     })
     if (to.query['id']) {
-      api.get({url: 'scene_data/' + to.query['id']}).then(res => {
+      api.get({url: 'sceneData/' + to.query['id']}).then(res => {
         this.selectScene = res
       })
       this.sceneDetailDrawer = true
@@ -250,7 +250,7 @@ export default {
     handlePost () {
       this.postSceneForm.categoryId = this.postCategoryList[this.postCategoryList.length - 1]
       this.postSceneForm.categoryRootId = this.postCategoryList[1] // 二级分类ID
-      api.post({url: 'scene_data', params: this.postSceneForm}).then(result => {
+      api.post({url: 'sceneData', params: this.postSceneForm}).then(result => {
         if (result > 0) {
           this.$router.push({name: 'SceneEdit', params: {sceneId: result}})
         } else {
