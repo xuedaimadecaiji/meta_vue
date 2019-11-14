@@ -28,8 +28,8 @@ function get (args) {
     // 判断是传入的url中是否包含地址头
     let url = args.url
     let root = store.state.root
-    if (url.search('http') !== -1) {
-      root = ''
+    if (url.search('system/') !== -1) {
+      root = 'http://localhost:8000/api/'
     }
     axios.get(root + url, {params: args['params']})
       .then(response => {

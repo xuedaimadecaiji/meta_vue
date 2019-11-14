@@ -94,14 +94,14 @@ export default {
     next(vm => {
       vm.tableName = to.params['table']
       // 取消网络请求，直接从store中读取基础数据，注意键需要加上‘_id’
-      vm.tableList = vm.$store.state.baseTableMap[vm.handleTableFormat(vm.tableName)]
+      vm.tableList = vm.$store.state.baseTableMap[vm.handleTableFormat(vm.tableName) + 'Id']
       vm.handleColumns()
       vm.initEditForm()
     })
   },
   beforeRouteUpdate (to, from, next) {
     this.tableName = to.params['table']
-    this.tableList = this.$store.state.baseTableMap[this.handleTableFormat(this.tableName)]
+    this.tableList = this.$store.state.baseTableMap[this.handleTableFormat(this.tableName) + 'Id']
     this.handleColumns()
     this.initEditForm()
     next()
@@ -118,15 +118,11 @@ export default {
       str.split('_').forEach(item => {
         temp += item.slice(0, 1).toUpperCase() + item.slice(1)
       })
-      temp = temp.slice(0, 1).toLowerCase() + temp.slice(1) + 'Id'
+      temp = temp.slice(0, 1).toLowerCase() + temp.slice(1)
       return temp
     },
     handleColumns () {
-      this.$store.state.systemTable.forEach(table => {
-        if (table['tableName'] === this.tableName) {
-          this.tableColumns = table['systemColumnList']
-        }
-      })
+      this.tableColumns = this.$store.state.systemTable[this.handleTableFormat(this.tableName)]['systemColumnList']
     },
     handleSubmit () {
       if (this.editForm['id'] === undefined) {

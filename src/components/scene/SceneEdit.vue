@@ -54,27 +54,27 @@ export default {
         {
           label: '物料数据',
           name: '1',
-          tableName: 'material_data'
+          tableName: 'materialData'
         },
         {
           label: '能源数据',
           name: '2',
-          tableName: 'energy_data'
+          tableName: 'energyData'
         },
         {
           label: '关键工艺参数',
           name: '3',
-          tableName: 'material_data'
+          tableName: 'materialData'
         },
         {
           label: '设备数据',
           name: '4',
-          tableName: 'device_data'
+          tableName: 'deviceData'
         },
         {
           label: '环境负荷数据',
           name: '5',
-          tableName: 'env_load_data'
+          tableName: 'envLoadData'
         }
       ],
       categoryList: [],
@@ -95,7 +95,7 @@ export default {
       vm.postSceneForm.id = to.params['sceneId']
       api.get({url: 'scene_data\\' + to.params['sceneId']}).then(result => {
         vm.postSceneForm = result
-        api.get({url: 'categories'}).then(res => {
+        api.get({url: 'system/categories'}).then(res => {
           vm.categoryList = res
           vm.postCategoryList = []
           vm.postCategoryList.push(vm.categoryList[0]['id'])
@@ -109,7 +109,7 @@ export default {
     let that = this
     api.get({url: 'scene_data\\' + to.params['sceneId']}).then(result => {
       this.postSceneForm = result
-      api.get({url: 'categories'}).then(res => {
+      api.get({url: 'system/categories'}).then(res => {
         that.categoryList = res
         that.postCategoryList = []
         that.postCategoryList.push(that.categoryList[0]['id'])

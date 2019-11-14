@@ -34,7 +34,7 @@
       </el-table-column>
     </el-table>
     <el-drawer
-      class="paneEditDrawer"
+      class="PaneEditDrawer"
       v-if="editable"
       :title="'新增' + label"
       :visible.sync="editDrawer"
@@ -56,9 +56,9 @@
           </el-select>
           <span v-if="column['columnKey'] === 'MUL'" class="AddManageDataTips">
             &nbsp;&nbsp;
-            <router-link :to="{name: 'ManageEdit', params: {table: column['columnName'].substring(0, column['columnName'].length - 2)}}">
+            <el-button type="text" @click="handlManageDrawer(column['columnName'], column['columnComment'])">
               缺少数据？前往添加
-            </router-link>
+            </el-button>
           </span>
         </el-form-item>
         <el-form-item>
@@ -68,12 +68,24 @@
         </el-form-item>
       </el-form>
     </el-drawer>
+    <el-drawer
+      class="AddManageDataDrawer"
+      :title="'新增' + addManageData.label"
+      :visible.sync="addManageData.visible"
+      :direction="'ltr'"
+      :size="'50%'">
+      <AddManageData :tableName="addManageData.tableName"></AddManageData>
+    </el-drawer>
   </div>
 </template>
 <script>
 import api from 'api'
+import AddManageData from './AddManageData'
 export default {
   name: 'Pane',
+  components: {
+    AddManageData
+  },
   props: {
     scene: {
       type: Object
@@ -84,7 +96,7 @@ export default {
     },
     tableName: {
       type: String,
-      default: 'material_data'
+      default: 'materialData'
     },
     label: {
       type: String,
@@ -95,11 +107,7 @@ export default {
     tableName: {
       immediate: true, // 很重要！！！，必须叫handler
       handler (val) {
-        this.$store.state.systemTable.forEach(table => {
-          if (table['tableName'] === this.tableName) {
-            this.tableColumns = table['systemColumnList']
-          }
-        })
+        this.tableColumns = this.$store.state.systemTable[this.tableName]['systemColumnList']
       }
     }
   },
@@ -110,6 +118,12 @@ export default {
   },
   data () {
     return {
+      addManageData: {
+        tableName: '',
+        visible: false,
+        label: ''
+      },
+      addManageDataVisible: false,
       deleteDialogVisible: false,
       editDrawer: false,
       editForm: {},
@@ -117,7 +131,11 @@ export default {
     }
   },
   methods: {
-    test () {},
+    handlManageDrawer (columnName, columnComment) {
+      this.addManageData.tableName = columnName.substring(0, columnName.length - 2)
+      this.addManageData.visible = true
+      this.addManageData.label = columnComment
+    },
     handleColumns () {
       this.$store.state.systemTable.forEach(table => {
         if (table['tableName'] === this.tableName) {
@@ -151,7 +169,7 @@ export default {
 }
 </script>
 <style lang=scss>
-  .paneEditDrawer{
+  .PaneEditDrawer, .AddManageDataDrawer{
     .el-drawer__body{
       height: 100px !important;
       form{
@@ -162,7 +180,7 @@ export default {
     }
   }
   .AddManageDataTips{
-    a{
+    button{
       color: #aaa;
       &:hover{
         text-decoration: underline;

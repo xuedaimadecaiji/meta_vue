@@ -137,8 +137,10 @@
             </el-card>
           </el-aside>
           <el-main>
-            <Pane :scene="selectScene" :editable="false" :label="item.label" v-for="item in tabPaneList" :key="item.index"></Pane>
-            <br><br><br>
+            <Pane :scene="selectScene" :editable="false" :label="item.label" :tableName="item.tableName"
+             v-for="item in tabPaneList" :key="item.index"></Pane>
+             <div class="clearfix"></div>
+            <el-divider></el-divider>
           </el-main>
         </el-container>
       </el-drawer>
@@ -165,27 +167,27 @@ export default {
         {
           label: '物料数据',
           name: '1',
-          tableName: 'material_data'
+          tableName: 'materialData'
         },
         {
           label: '能源数据',
           name: '2',
-          tableName: 'energy_data'
+          tableName: 'energyData'
         },
         {
           label: '关键工艺参数',
           name: '3',
-          tableName: 'material_data'
+          tableName: 'materialData'
         },
         {
           label: '设备数据',
           name: '4',
-          tableName: 'device_data'
+          tableName: 'deviceData'
         },
         {
           label: '环境负荷数据',
           name: '5',
-          tableName: 'env_load_data'
+          tableName: 'envLoadData'
         }
       ],
       postCategoryList: [],

@@ -29,17 +29,17 @@ Vue.config.productionTip = false
 
 function beforeEachFunc () {
   if (store.state.categories === null) {
-    api.get({url: 'categories/tree'}).then(res => {
+    api.get({url: 'system/categories/tree'}).then(res => {
       store.commit('setCategories', res)
     })
   }
   if (store.state.systemTable === null) {
-    api.get({url: 'system_table'}).then(res => {
+    api.get({url: 'system/tables'}).then(res => {
       store.commit('setSystemTable', res)
     })
   }
   if (store.state.baseTableMap === null) {
-    api.get({url: 'categories/all'}).then(res => {
+    api.get({url: 'system/all'}).then(res => {
       store.commit('setBaseTableMap', res)
     })
   }
