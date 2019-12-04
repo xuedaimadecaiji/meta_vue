@@ -48,11 +48,11 @@
           </el-input>
           <el-select v-if="column['columnKey'] === 'MUL'"  v-model="editForm[column['columnName']]" filterable placeholder="请选择">
             <el-option
-              v-for="item in baseTableMap[column['columnName'].substring(0, column['columnName'].length - 2)]"
-              :key="item.id"
-              :label="item['title']"
-              :value="item.id">
-            </el-option>
+            v-for="item in baseTableMap[column['columnName'].substring(0, column['columnName'].length - 2)]"
+            :key="item.id"
+            :label="item['title']"
+            :value="item.id">
+          </el-option>
           </el-select>
           <span v-if="column['columnKey'] === 'MUL'" class="AddManageDataTips">
             &nbsp;&nbsp;

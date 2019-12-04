@@ -34,7 +34,7 @@ function beforeEachFunc () {
     })
   }
   if (store.state.systemTable === null) {
-    api.get({url: 'system/tables'}).then(res => {
+    api.get({url: 'sys tem/tables'}).then(res => {
       store.commit('setSystemTable', res)
     })
   }

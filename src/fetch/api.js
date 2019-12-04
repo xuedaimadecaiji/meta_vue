@@ -54,6 +54,7 @@ function post (args) {
         args['progressCallback'](complete)
       }
     }
+    store.commit('clear')
     axios.post(root + args.url, args['params'], args['config'])
       .then(response => {
         if (response.data !== 0) {
@@ -86,6 +87,7 @@ function put (args) {
           Message.error('失败！')
         }
         resolve(response.data)
+        store.commit('clear')
       })
       .catch((error) => {
         NProgress.done()
@@ -102,6 +104,7 @@ function del (args) {
     }
     axios.delete(root + url, {data: args['params']})
       .then(response => {
+        store.commit('clear')
         resolve(response.data)
       })
       .catch((error) => {

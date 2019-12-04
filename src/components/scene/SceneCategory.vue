@@ -5,7 +5,7 @@
         <el-button style="margin-top: 20px" type="primary" @click="postSceneDrawer=true">
           <i class="fa fa-plus-circle"></i>
           新增工艺场景
-        </el-button>
+        </el-button>     <!--以弹窗（drawer抽屉）的形式新增工艺场景-->
         <el-divider></el-divider>
         <el-form class="searchForm" ref="searchForm" :model="searchForm" :rules="searchRules">
         <el-form-item>
@@ -15,7 +15,7 @@
             </el-radio-button>
             <el-radio-button v-for="item in categories[0]['children']" :label="item['id']" :key="item.index">
               {{item['title']}}
-            </el-radio-button>
+            </el-radio-button>    <!--直接从工艺场景分类表中读工艺类型，做成可选的单选按钮-->
           </el-radio-group>
         </el-form-item>
         <el-form-item prop="content">
@@ -32,7 +32,7 @@
         :size="'50%'">
         <el-form ref="postSceneForm" :model="postSceneForm" :rules="postSceneRules" label-width="100px">
           <el-form-item label="场景名称" prop="title">
-            <el-input v-model="postSceneForm.title"></el-input>
+            <el-input v-model="postSceneForm.title"></el-input>  <!--输入-->
           </el-form-item>
           <el-form-item label="场景描述" prop="description">
             <el-input type="textarea"
@@ -44,14 +44,14 @@
               clearable
               :options="categories"
               :props="{ checkStrictly: true, expandTrigger: 'hover', label: 'title', value: 'id' }">
-            </el-cascader>
+            </el-cascader>  <!--级联选择器，选择场景分类，三级场景分类-->
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="handlePost('postSceneForm')">立即创建</el-button>
-          </el-form-item>
+          </el-form-item>  <!--点击创建调用提交方法handlePost-->
         </el-form>
       </el-drawer>
-    </el-header>
+    </el-header>   <!--头文件结束，开始主体部分-->
     <el-main>
       <div class="wrapper">
         <el-table
