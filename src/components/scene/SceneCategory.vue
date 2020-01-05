@@ -211,12 +211,24 @@ export default {
       postSceneRules: {}
     }
   },
+  // 这里表示进入路由页面（工艺场景分类）之前，判断要访问的是什么东西。
+  // 如果是所有工艺场景，那么就访问工艺场景表抽取所有工艺场景数据
+  // 如果是不同的工艺场景库，那么就表示要抽取同一工艺大类的工艺场景，
+  // 就通过工艺类型表抽取此类工艺的工艺场景（先在工艺类型表里面找同类工艺，
+  // 然后根据同类工艺在工艺场景表里找工艺场景）
   beforeRouteEnter (to, from, next) {
     next(vm => {
-      api.get({url: 'sceneData', params: {category: to.query['category'] ? to.query['category'] : ''}}).then(result => {
-        vm.sceneList = result
-        vm.searchForm.selectCategory = to.query['category'] ? to.query['category'] : ''
-      })
+      if (to.query['category']) {
+        api.get({url: 'category/' + to.query['category']}).then(res => {
+          vm.sceneList = res['sceneDataList']
+          vm.searchForm.selectCategory = to.query['category'] ? to.query['category'] : ''
+        })
+      } else {
+        api.get({url: 'sceneData'}).then(result => {
+          vm.sceneList = result
+          vm.searchForm.selectCategory = to.query['category'] ? to.query['category'] : ''
+        })
+      }
       if (to.query['id']) {
         api.get({url: 'sceneData/' + to.query['id']}).then(res => {
           vm.selectScene = res
@@ -225,16 +237,18 @@ export default {
       }
     })
   },
+
   beforeRouteUpdate (to, from, next) {
-    api.get({url: 'sceneData', params: {category: to.query['category'] ? to.query['category'] : ''}}).then(result => {
-      this.sceneList = result
-      this.searchForm.selectCategory = to.query['category'] ? to.query['category'] : ''
-    })
-    if (to.query['id']) {
-      api.get({url: 'sceneData/' + to.query['id']}).then(res => {
-        this.selectScene = res
+    if (to.query['category']) {
+      api.get({url: 'category/' + to.query['category']}).then(res => {
+        this.sceneList = res['sceneDataList']
+        this.searchForm.selectCategory = to.query['category'] ? to.query['category'] : ''
       })
-      this.sceneDetailDrawer = true
+    } else {
+      api.get({url: 'sceneData'}).then(result => {
+        this.sceneList = result
+        this.searchForm.selectCategory = to.query['category'] ? to.query['category'] : ''
+      })
     }
     next()
   },
