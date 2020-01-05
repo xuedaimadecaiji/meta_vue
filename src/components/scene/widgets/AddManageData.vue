@@ -24,6 +24,7 @@
   </div>
 </template>
 <script>
+import api from 'api'
 export default {
   name: 'AddManageData',
   props: {
@@ -45,7 +46,11 @@ export default {
     }
   },
   methods: {
-    handleSubmit () {}
+    handleSubmit () {
+      api.post({url: this.tableName, params: this.editForm}).then(res => {
+        history.go(0)
+      })
+    }
   }
 }
 </script>

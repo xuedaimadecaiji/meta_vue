@@ -7,6 +7,7 @@ export default new Vuex.Store({
       'user_background': 'http://cselife.oss-cn-beijing.aliyuncs.com/img/sys/user/profile_background.jpg'
     },
     // root: 'http://114.115.238.65/api/',
+    // root: 'http://10.1.1.230:8000/api/manage/',
     root: 'http://localhost:8000/api/manage/',
     // root: 'http://192.168.1.103:8000/api/manage/',
     posting: false,

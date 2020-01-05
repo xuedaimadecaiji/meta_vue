@@ -30,6 +30,7 @@ function get (args) {
     let root = store.state.root
     if (url.search('system/') !== -1) {
       root = 'http://localhost:8000/api/'
+      // root = 'http://10.1.1.230:8000/api/'
     }
     axios.get(root + url, {params: args['params']})
       .then(response => {
@@ -54,9 +55,9 @@ function post (args) {
         args['progressCallback'](complete)
       }
     }
-    store.commit('clear')
     axios.post(root + args.url, args['params'], args['config'])
       .then(response => {
+        store.commit('clear')
         if (response.data !== 0) {
           Message.success('成功！')
         } else {
@@ -86,8 +87,8 @@ function put (args) {
         } else {
           Message.error('失败！')
         }
-        resolve(response.data)
         store.commit('clear')
+        resolve(response.data)
       })
       .catch((error) => {
         NProgress.done()
@@ -117,14 +118,17 @@ function all (list) {
   return new Promise((resolve) => {
     let root = store.state.root
     let reqList = []
-    for (let item in list) {
-      reqList.push(axios.get(root + list[item]['url'], {params: list[item]['params']}))
-    }
+    list.forEach(item => {
+      let url = item.url
+      if (url.search('system/') !== -1) {
+        root = 'http://localhost:8000/api/'
+        // root = 'http://10.1.1.230:8000/api/'
+      }
+      reqList.push(axios.get(root + url, {params: item['params']}))
+    })
     axios.all(reqList).then(axios.spread(function (...resList) {
-      for (let j = 0, len = resList.length; j < len; j++) {
-        if (resList[j].data['next'] === null) {
-          resList[j].data['next'] = 0
-        }
+      for (let i = 0; i < resList.length; i++) {
+        resList[i] = resList[i]['data']
       }
       resolve(resList)
     }))
@@ -144,12 +148,6 @@ export default {
     return del(args)
   },
   all (list) {
-    store.commit('startPageLoading')
-    NProgress.start()
-    NProgress.configure({easing: 'ease', speed: 500, showSpinner: false})
-    list.forEach((item) => {
-      item['url'] = item['url']
-    })
     return all(list)
   }
 }

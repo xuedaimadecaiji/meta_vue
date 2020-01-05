@@ -26,31 +26,43 @@ Vue.prototype.api = api
 Vue.prototype.$http = axios
 Vue.use(ElementUI)
 Vue.config.productionTip = false
-
-function beforeEachFunc () {
-  if (store.state.categories === null) {
-    api.get({url: 'system/categories/tree'}).then(res => {
-      store.commit('setCategories', res)
-    })
-  }
-  if (store.state.systemTable === null) {
-    api.get({url: 'sys tem/tables'}).then(res => {
-      store.commit('setSystemTable', res)
-    })
-  }
-  if (store.state.baseTableMap === null) {
-    api.get({url: 'system/all'}).then(res => {
-      store.commit('setBaseTableMap', res)
-    })
-  }
-}
-
+// function beforeEachFunc () {
+//   if (store.state.categories === null) {
+//     api.get({url: 'system/categories/tree'}).then(res => {
+//       store.commit('setCategories', res)
+//     })
+//   }
+//   if (store.state.systemTable === null) {
+//     api.get({url: 'system/tables'}).then(res => {
+//       store.commit('setSystemTable', res)
+//     })
+//   }
+//   if (store.state.baseTableMap === null) {
+//     api.get({url: 'system/all'}).then(res => {
+//       store.commit('setBaseTableMap', res)
+//     })
+//   }
+// }
+// 前置拦截，任何界面在进入之前都会被该函数拦截，直到next()被执行才会进入界面
 router.beforeEach((to, from, next) => {
   NProgress.start()
+  let list = [
+    {url: 'system/categories/tree'},
+    {url: 'system/tables'},
+    {url: 'system/all'}
+  ]
   if (to.meta.requireAuth) { // 判断跳转的路由是否需要登录
     if (store.state.auth) {
-      beforeEachFunc()
-      next() // 已登录
+      if (store.state.baseTableMap === null || store.state.categories === null || store.state.systemTable === null) {
+        api.all(list).then(res => {
+          store.commit('setCategories', res[0])
+          store.commit('setSystemTable', res[1])
+          store.commit('setBaseTableMap', res[2])
+          next()
+        })
+      } else {
+        next() // 已登录
+      }
     } else {
       next({
         name: 'Login',
@@ -58,8 +70,16 @@ router.beforeEach((to, from, next) => {
       })
     }
   } else {
-    beforeEachFunc()
-    next()
+    if (store.state.baseTableMap === null || store.state.categories === null || store.state.systemTable === null) {
+      api.all(list).then(res => {
+        store.commit('setCategories', res[0])
+        store.commit('setSystemTable', res[1])
+        store.commit('setBaseTableMap', res[2])
+        next()
+      })
+    } else {
+      next()
+    }
   }
 })
 

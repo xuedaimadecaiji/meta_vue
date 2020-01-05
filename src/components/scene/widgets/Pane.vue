@@ -8,7 +8,7 @@
     </el-button>
     <el-divider v-if="editable"></el-divider>
     <el-table
-      :data="scene['materialDataList']">
+      :data="scene[tableName + 'List' ]">
       <el-table-column
         v-if="editable"
         :fixed="true"
@@ -42,7 +42,7 @@
       :size="'50%'">
       <el-form ref="editForm" :model="editForm" label-width="150px">
         <el-form-item :prop="column['columnName']" :label="column['columnComment']"  v-show="column['columnName'] !== 'id'"
-         v-for="column in tableColumns" :key="column.index">
+         v-for="column in tableColumns" :key="column.index" v-if="column['columnName'] !== 'sceneDataId'">
           <el-input v-if="column['columnKey'] !== 'MUL'" v-model="editForm[column['columnName']]"
            :type="column['dataType'] === 'int' ? 'number' : 'textarea'">
           </el-input>
@@ -144,6 +144,8 @@ export default {
       })
     },
     handleSubmit () {
+      // 修复bug，
+      this.editForm['sceneDataId'] = this.scene['id']
       if (this.editForm['id'] === undefined) {
         api.post({url: this.tableName, params: this.editForm}).then(res => {
           history.go(0)
@@ -158,6 +160,8 @@ export default {
       this.editForm = {}
       if (row) {
         this.editForm = row
+        // 修复bug，
+        this.editForm['sceneDataId'] = this.scene['id']
       }
       this.editDrawer = true
     },
