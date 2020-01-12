@@ -24,29 +24,13 @@
         <!--这段解释-->
         <template slot-scope="scope">
           <div  v-if="column['columnKey'] === 'MUL'">
-            {{scope.row[column['columnName'].substring(0, column['columnName'].length - 2)]['title']}}
+            {{scope.row[column['columnName'].substring(0, column['columnName'].length - 2)] ?
+            scope.row[column['columnName'].substring(0, column['columnName'].length - 2)]['title'] : scope.row[column['columnName']]}}
           </div>
-<!--          <div>
-            {{scope.row[column]}}
-          </div>-->
           <div v-else>
             {{ scope.row[column['columnName']] }}
           </div>
         </template>
-<!--    <template slot-scope="scope" v-if="column['columnKey'] === 'MUL'">
-         &lt;!&ndash; scope.row[column['columnName'].substring(0, column['columnName'].length - 2) + 'List']&ndash;&gt;
-          <el-button @click="detailShowDrawer(scope.row)" type="text" size="small">详情</el-button>
-        </template>-->
-
-<!--          {{((column['columnKey'] === 'MUL') && (scope.row[column['columnName']] !== null)) ?
-          ((scope.row[column['columnName'].substring(0, column['columnName'].length - 2)] === null) ||
-            (scope.row[column['columnName'].substring(0, column['columnName'].length - 2)] === undefined) ?
-           'null' : scope.row[column['columnName'].substring(0, column['columnName'].length - 2)]['title'])
-           : scope.row[column['columnName']]}}-->
-<!--        <template slot-scope="scope">-->
-<!--          {{column['columnKey'] === 'MUL' ? scope.row[column['columnName'].substring(0, column['columnName'].length - 2) + 'List']-->
-<!--          : scope.row[column['columnName']]}}-->
-<!--        </template>-->
       </el-table-column>
     </el-table>
     <el-drawer
@@ -77,34 +61,6 @@
         </el-form-item>
       </el-form>
     </el-drawer>
-    <!--<el-drawer
-      class="detailShowDrawer"
-      title="详情信息"
-      :visible.sync="showDrawer"
-      :direction="'ltr'"
-      :size="'50%'">
-      <el-form ref="postForm" v-model="editForm" label-width="150px">
-        <el-form-item :prop="item['columnName']" :label="item['columnComment']" v-show="item['columnName'] !== 'id'"
-                      v-for="item in tableColumns" :key="item.index">
-          <el-input v-if="item['columnKey'] !== 'MUL'" v-model="editForm[item['columnName']]"
-                    :type="item['dataType'] === 'int' ? 'number' : 'textarea'">
-          </el-input>
-          <el-select v-if="item['columnKey'] === 'MUL'"  v-model="editForm[item['columnName']]" filterable placeholder="请选择">
-            <el-option
-              v-for="item in baseTableMap[item['columnName'].substring(0, item['columnName'].length - 2)]"
-              :key="item.id"
-              :label="item['title']"
-              :value="item.id">
-            </el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="success" @click="handleSubmit">
-            保存
-          </el-button>
-        </el-form-item>
-      </el-form>
-    </el-drawer>-->
     <el-dialog
       title="提示"
       :visible.sync="deleteDialogVisible"

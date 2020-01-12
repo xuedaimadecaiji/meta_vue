@@ -237,7 +237,6 @@ export default {
       }
     })
   },
-
   beforeRouteUpdate (to, from, next) {
     if (to.query['category']) {
       api.get({url: 'category/' + to.query['category']}).then(res => {
@@ -250,6 +249,12 @@ export default {
         this.searchForm.selectCategory = to.query['category'] ? to.query['category'] : ''
       })
     }
+    if (to.query['id']) {
+      api.get({url: 'sceneData/' + to.query['id']}).then(res => {
+        this.selectScene = res
+      })
+      this.sceneDetailDrawer = true
+    }
     next()
   },
   methods: {
@@ -259,7 +264,9 @@ export default {
         query[i] = this.$route.query[i]
       }
       query['id'] = row['id']
+      // console.log(query['id'])
       this.$router.push({name: 'SceneCategory', query: query})
+      // this.sceneDetailDrawer = true
     },
     handlePost () {
       this.postSceneForm.categoryId = this.postCategoryList[this.postCategoryList.length - 1]
