@@ -21,6 +21,9 @@ export default {
 
 <style lang="scss">
   .UserViewMain{
+    .el-aside{
+      width: 200px!important;
+    }
     .el-card{
       margin: 10px 0;
     }

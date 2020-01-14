@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HomeViewMain from '../components/home/HomeViewMain'
-import HomeIndex from '../components/home/HomeIndex'
+import HomeIndex from '../components/HomeIndex'
 import DatabaseViewMain from '../components/database/DatabaseViewMain'
 import DatabaseIndex from '../components/database/DatabaseIndex'
 
@@ -22,10 +21,10 @@ import BatchIndex from '../components/database/batch/BatchIndex'
 import BatchExport from '../components/database/batch/BatchExport'
 import BatchImport from '../components/database/batch/BatchImport'
 
-import UserViewMain from '../components/user/UserViewMain'
-import UserIndex from '../components/user/UserIndex'
-import UserGroup from '../components/user/UserGroup'
-import UserPermission from '../components/user/UserPermission'
+import UserViewMain from '../components/database/user/UserViewMain'
+import UserIndex from '../components/database/user/UserIndex'
+import UserGroup from '../components/database/user/UserGroup'
+import UserPermission from '../components/database/user/UserPermission'
 
 import PersonViewMain from '../components/person/PersonViewMain'
 import PersonIndex from '../components/person/PersonIndex'
@@ -42,17 +41,8 @@ export default new Router({
   routes: [
     {
       path: '/',
-      component: HomeViewMain,
-      children: [
-        {
-          path: '',
-          meta: {
-            requireAuth: true
-          },
-          name: 'HomeIndex',
-          component: HomeIndex
-        }
-      ]
+      name: 'HomeIndex',
+      component: HomeIndex
     },
     {
       path: '/database/:categoryId/',
@@ -158,6 +148,40 @@ export default new Router({
               component: SearchIndex
             }
           ]
+        },
+        {
+          path: 'user/',
+          component: UserViewMain,
+          children: [
+            {
+              path: '',
+              meta: {
+                requireAuth: true
+              },
+              name: 'UserIndex',
+              component: UserIndex
+            },
+            {
+              path: 'group/',
+              name: 'UserGroup',
+              component: UserGroup
+            },
+            {
+              path: 'permission/',
+              name: 'UserPermission',
+              component: UserPermission
+            },
+            {
+              path: 'account/',
+              name: 'Admin',
+              component: Admin
+            },
+            {
+              path: 'handle/',
+              name: 'AccountHandle',
+              component: AccountHandle
+            }
+          ]
         }
       ]
     },
@@ -172,40 +196,6 @@ export default new Router({
           },
           name: 'PersonIndex',
           component: PersonIndex
-        }
-      ]
-    },
-    {
-      path: '/user/',
-      component: UserViewMain,
-      children: [
-        {
-          path: '',
-          meta: {
-            requireAuth: true
-          },
-          name: 'UserIndex',
-          component: UserIndex
-        },
-        {
-          path: 'group/',
-          name: 'UserGroup',
-          component: UserGroup
-        },
-        {
-          path: 'permission/',
-          name: 'UserPermission',
-          component: UserPermission
-        },
-        {
-          path: 'account/',
-          name: 'Admin',
-          component: Admin
-        },
-        {
-          path: 'handle/',
-          name: 'AccountHandle',
-          component: AccountHandle
         }
       ]
     },

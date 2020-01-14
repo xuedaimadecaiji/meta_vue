@@ -31,45 +31,4 @@ export default {
     height: 100%;
     max-height: 100%;
   }
-  .HomeIndex, .DatabaseIndex{
-    h1{
-      font-size: 30px;
-      padding: 100px;
-      margin: 0;
-      text-align: center;
-      background: #4A524F;
-      color: gold;
-    }
-    .wrapper{
-      max-width: 1000px;
-      margin: auto;
-      a{
-        font-weight: bolder;
-        font-size: larger;
-        text-align: center!important;
-        &:hover{
-          .el-card{
-            background: darkslategray!important;
-            color: #ffffff;
-          }
-        }
-      }
-      .el-row{
-        // margin: 50px 0;
-      }
-      .el-card__body{
-        padding: 50px;
-        text-align: center!important;
-        i{
-          font-size: x-large;
-        }
-      }
-      .el-card{
-        margin-bottom: 10px!important;
-      }
-      .add .el-card__body{
-        padding: 30px!important;
-      }
-    }
-  }
 </style>

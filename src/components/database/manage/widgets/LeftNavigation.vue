@@ -1,6 +1,6 @@
 <template>
   <div class="LeftNavigation">
-    <el-card class="box-card" v-for="sub in navList" :key="sub.index">
+    <el-card class="" v-for="sub in navList" :key="sub.index">
       <div slot="header" class="clearfix">
         <span><i :class="'fa fa-fw fa-' + sub.icon"></i> &nbsp;{{sub.title}}</span>
       </div>

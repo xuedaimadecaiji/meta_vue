@@ -1,43 +1,9 @@
 <template>
-  <el-row class="Navigation">
-    <el-col :span="3">
-      <router-link :to="{name: 'HomeIndex'}">
-        <i class="fa fa-fw fa-home" style="font-size: larger"></i> {{title}}
-      </router-link>
-    </el-col>
-    <el-col :span="18">
-      <router-link v-for="item in navListLeft" :key="item.index" :to="{name: item['name']}">
-        <i :class="'fa fa-fw fa-' + item['icon']"></i> {{item['title']}}
-      </router-link>
-    </el-col>
-    <el-col :span="3" style="text-align: right">
-      <el-dropdown v-if="auth">
-        <router-link class="el-dropdown-link"  :to="{name: 'PersonIndex'}">
-          <i class="fa fa-fw fa-user"></i> {{auth['username']}}
-        </router-link>
-        <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item>
-            <router-link :to="{name: 'PersonIndex'}">
-              <i class="fa fa-fw fa-user"></i> 我的主页
-            </router-link>
-          </el-dropdown-item>
-          <el-dropdown-item>
-            <router-link :to="{name: 'PersonIndex'}">
-              <i class="fa fa-fw fa-gear"></i> 设置
-            </router-link>
-          </el-dropdown-item>
-          <el-dropdown-item>
-            <el-button type="text" @click="handleLogout">
-              <i class="fa fa-fw fa-sign-out"></i> 退出登录
-            </el-button>
-          </el-dropdown-item>
-        </el-dropdown-menu>
-      </el-dropdown>
-      <router-link  v-else v-for="item in navListRight" :key="item.index" :to="{name: item['name']}">
-        <i :class="'fa fa-fw fa-' + item['icon']"></i> {{item['title']}}
-      </router-link>
-    </el-col>
-  </el-row>
+  <div class="Navigation">
+    <router-link v-for="item in navListLeft" :key="item.index" :to="{name: item['name']}">
+      <i :class="'fa fa-fw fa-' + item['icon']"></i> {{item['title']}}
+    </router-link>
+  </div>
 </template>
 
 <script>
@@ -54,7 +20,7 @@ export default {
       navListLeft: [
         {
           title: '工艺场景',
-          icon: 'database',
+          icon: 'cubes',
           name: 'SceneIndex'
         },
         {
@@ -102,14 +68,18 @@ export default {
 <style scoped lang="scss">
   .Navigation{
     height: 100%;
+    background: #333333;
     a{
-      display: inline-block;
-      margin: 10px;
-      padding: 10px;
+      display: block;
+      padding: 15px 20px;
       color: #fff;
+    }
+    i{
+      margin-right: 3px;
     }
     .router-link-active{
       color: gold;
+      background: #545C64;
     }
   }
 

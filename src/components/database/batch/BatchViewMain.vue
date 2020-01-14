@@ -19,6 +19,11 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+  .BatchViewMain{
+    .el-aside{
+      width: 200px!important;
+    }
+  }
 
 </style>
