@@ -19,7 +19,7 @@
         </el-form-item>
         <el-form-item>
           <el-button type="success" @click="handlePut('postSceneForm')">保存</el-button>
-          <router-link class="el-button el-button--primary" :to="{name: 'SceneCategory', query: {id: postSceneForm.id}}">
+          <router-link class="el-button el-button--primary" :to="{name: 'SceneIndex', query: {id: postSceneForm.id}}">
             查看工艺场景
           </router-link>
         </el-form-item>

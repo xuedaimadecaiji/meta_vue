@@ -6,21 +6,12 @@
     <el-divider></el-divider>
     <el-table
       height="600"
+      width="100%"
       :data="tableList">
-      <el-table-column
-        :fixed="true"
-        label="操作"
-        width="100">
-        <template slot-scope="scope">
-          <el-button @click="handleEditDrawer(scope.row)" type="text" size="small">编辑</el-button>
-          <el-button @click="handleDeleteDialog(scope.row)" type="text" size="small">删除</el-button>
-        </template>
-      </el-table-column>
       <el-table-column
         :label="column['columnComment']"
         v-for="column in tableColumns"
-        :key="column.index"
-        width="150">
+        :key="column.index">
         <!--这段解释-->
         <template slot-scope="scope">
           <div  v-if="column['columnKey'] === 'MUL'">
@@ -30,6 +21,13 @@
           <div v-else>
             {{ scope.row[column['columnName']] }}
           </div>
+        </template>
+      </el-table-column>
+      <el-table-column
+        label="操作">
+        <template slot-scope="scope">
+          <el-button @click="handleEditDrawer(scope.row)" type="text" size="small">编辑</el-button>
+          <el-button @click="handleDeleteDialog(scope.row)" type="text" size="small">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -173,5 +171,8 @@ export default {
   }
   .ManageEdit{
     padding: 20px;
+    .el-table{
+      width: 100%!important;
+    }
   }
 </style>

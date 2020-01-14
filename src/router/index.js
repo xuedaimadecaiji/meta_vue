@@ -2,10 +2,11 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import HomeViewMain from '../components/home/HomeViewMain'
 import HomeIndex from '../components/home/HomeIndex'
+import DatabaseViewMain from '../components/database/DatabaseViewMain'
+import DatabaseIndex from '../components/database/DatabaseIndex'
 
 import SceneIndex from '../components/scene/SceneIndex'
 import SceneViewMain from '../components/scene/SceneViewMain'
-import SceneCategory from '../components/scene/SceneCategory'
 import SceneEdit from '../components/scene/SceneEdit'
 
 import SearchViewMain from '../components/search/SearchViewMain'
@@ -53,98 +54,101 @@ export default new Router({
       ]
     },
     {
-      path: '/search/',
-      component: SearchViewMain,
+      path: '/database/:categoryId/',
+      component: DatabaseViewMain,
       children: [
         {
           path: '',
-          meta: {
-            requireAuth: true
-          },
-          name: 'SearchIndex',
-          component: SearchIndex
-        }
-      ]
-    },
-    {
-      path: '/scene/',
-      component: SceneViewMain,
-      children: [
-        {
-          path: '',
-          meta: {
-            requireAuth: true
-          },
-          name: 'SceneIndex',
-          component: SceneIndex
+          component: DatabaseIndex,
+          name: 'DatabaseIndex'
         },
         {
-          path: 'edit/:sceneId',
-          meta: {
-            requireAuth: true
-          },
-          name: 'SceneEdit',
-          component: SceneEdit
+          path: 'scene/',
+          component: SceneViewMain,
+          children: [
+            {
+              path: '',
+              meta: {
+                requireAuth: true
+              },
+              name: 'SceneIndex',
+              component: SceneIndex
+            },
+            {
+              path: 'edit/:sceneId',
+              meta: {
+                requireAuth: true
+              },
+              name: 'SceneEdit',
+              component: SceneEdit
+            }
+          ]
         },
         {
-          path: 'category',
-          meta: {
-            requireAuth: true
-          },
-          name: 'SceneCategory',
-          component: SceneCategory
-        }
-      ]
-    },
-    {
-      path: '/manage/',
-      component: ManageViewMain,
-      children: [
-        {
-          path: '',
-          meta: {
-            requireAuth: true
-          },
-          name: 'ManageIndex',
-          component: ManageIndex
+          path: 'manage/',
+          component: ManageViewMain,
+          children: [
+            {
+              path: '',
+              meta: {
+                requireAuth: true
+              },
+              name: 'ManageIndex',
+              component: ManageIndex
+            },
+            {
+              path: ':table/',
+              meta: {
+                requireAuth: true
+              },
+              name: 'ManageEdit',
+              component: ManageEdit
+            }
+          ]
         },
         {
-          path: ':table/',
-          meta: {
-            requireAuth: true
-          },
-          name: 'ManageEdit',
-          component: ManageEdit
-        }
-      ]
-    },
-    {
-      path: '/batch/',
-      component: BatchViewMain,
-      children: [
-        {
-          path: '',
-          meta: {
-            requireAuth: true
-          },
-          name: 'BatchIndex',
-          component: BatchIndex
+          path: 'batch/',
+          component: BatchViewMain,
+          children: [
+            {
+              path: '',
+              meta: {
+                requireAuth: true
+              },
+              name: 'BatchIndex',
+              component: BatchIndex
+            },
+            {
+              path: 'import',
+              meta: {
+                requireAuth: true
+              },
+              name: 'BatchImport',
+              component: BatchImport
+            },
+            {
+              path: 'export',
+              meta: {
+                requireAuth: true
+              },
+              name: 'BatchExport',
+              component: BatchExport
+            }
+          ]
         },
         {
-          path: 'import',
-          meta: {
-            requireAuth: true
-          },
-          name: 'BatchImport',
-          component: BatchImport
-        },
-        {
-          path: 'export',
-          meta: {
-            requireAuth: true
-          },
-          name: 'BatchExport',
-          component: BatchExport
+          path: 'search/',
+          component: SearchViewMain,
+          children: [
+            {
+              path: '',
+              meta: {
+                requireAuth: true
+              },
+              name: 'SearchIndex',
+              component: SearchIndex
+            }
+          ]
         }
       ]
     },
