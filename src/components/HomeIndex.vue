@@ -14,7 +14,7 @@
         </el-col>
         <el-col :span="24">
           <el-card class="add">
-            <el-button @click="handleAdd">
+            <el-button type="text" @click="handleAdd">
               <i class="fa fa-fw fa-plus-circle"></i> 添加数据库
             </el-button>
           </el-card>

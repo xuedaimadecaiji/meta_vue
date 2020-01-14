@@ -11,8 +11,19 @@
 export default {
   name: 'Breadcrumb',
   computed: {
+    categoryId () {
+      return this.$route.params['categoryId']
+    },
     navList () {
       return this.$store.state.breadcrumbList
+    },
+    databaseList () {
+      return this.$store.state.categories[0]['children']
+    }
+  },
+  data () {
+    return {
+      value: 0
     }
   }
 }
