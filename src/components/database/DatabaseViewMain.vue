@@ -1,7 +1,8 @@
 <template>
   <el-container class="DatabaseViewMain">
-    <el-header id="header">
-      <Header></Header>
+    <el-header>
+      <Header id="header"></Header>
+      <!-- <Breadcrumb id="breadcrumb"></Breadcrumb> -->
     </el-header>
     <el-container>
       <el-aside id="navigation">
@@ -15,19 +16,25 @@
 </template>
 <script>
 import Header from './widgets/Header'
+import Breadcrumb from './widgets/Breadcrumb'
 import Navigation from './widgets/Navigation'
 export default {
   name: 'DatabaseViewMain',
   components: {
     Header,
+    Breadcrumb,
     Navigation
   }
 }
 </script>
 <style scoped lang="scss">
     #header{
-      height: 70px!important;
+      height: 71px!important;
       background: #4A524F;
+    }
+    #breadcrumb{
+      height: 40px!important;
+      background: #2D2D2D;
     }
     #navigation{
       width: 200px!important;

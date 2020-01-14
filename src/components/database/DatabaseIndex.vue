@@ -58,11 +58,44 @@ export default {
   beforeRouteEnter (to, from, next) {
     next(vm => {
       vm.categoryId = to.params['categoryId']
+      vm.setBreadCrumb()
     })
   },
   beforeRouteUpdate (to, from, next) {
     this.categoryId = to.params['categoryId']
+    this.setBreadCrumb()
     next()
+  },
+  methods: {
+    setBreadCrumb () {
+      let title = '机加工数据库'
+      this.$store.state.categories[0]['children'].forEach(item => {
+        if (item['id'] === parseInt(this.categoryId)) {
+          title = item['title']
+        }
+      })
+      let list = [
+        {
+          name: 'HomeIndex',
+          title: '首页',
+          params: {},
+          query: {}
+        },
+        {
+          name: 'DatabaseIndex',
+          title: title,
+          params: {},
+          query: {}
+        },
+        {
+          name: 'SceneIndex',
+          title: '工艺场景',
+          params: {},
+          query: {}
+        }
+      ]
+      this.$store.commit('setBreadcrumbList', list)
+    }
   }
 }
 </script>

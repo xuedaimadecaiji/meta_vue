@@ -24,7 +24,7 @@ export default {
           name: 'SceneIndex'
         },
         {
-          title: '基础数据管理',
+          title: '基础数据',
           icon: 'table',
           name: 'ManageIndex'
         },
