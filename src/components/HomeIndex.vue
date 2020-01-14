@@ -14,9 +14,9 @@
         </el-col>
         <el-col :span="24">
           <el-card class="add">
-            <router-link :to="{name: 'HomeIndex'}">
+            <el-button @click="handleAdd">
               <i class="fa fa-fw fa-plus-circle"></i> 添加数据库
-            </router-link>
+            </el-button>
           </el-card>
         </el-col>
       </el-row>
@@ -34,6 +34,11 @@ export default {
   },
   data () {
     return {
+    }
+  },
+  methods: {
+    handleAdd () {
+      this.$message.warning('新增数据库功能暂未开放')
     }
   }
 }

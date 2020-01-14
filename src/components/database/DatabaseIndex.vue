@@ -77,19 +77,15 @@ export default {
       let list = [
         {
           name: 'HomeIndex',
-          title: '首页',
+          title: '主页',
+          icon: 'home',
           params: {},
           query: {}
         },
         {
           name: 'DatabaseIndex',
-          title: title,
-          params: {},
-          query: {}
-        },
-        {
-          name: 'SceneIndex',
-          title: '工艺场景',
+          title: title + '数据库',
+          icon: 'database',
           params: {},
           query: {}
         }

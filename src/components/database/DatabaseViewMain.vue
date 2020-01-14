@@ -2,7 +2,7 @@
   <el-container class="DatabaseViewMain">
     <el-header>
       <Header id="header"></Header>
-      <!-- <Breadcrumb id="breadcrumb"></Breadcrumb> -->
+      <Breadcrumb id="breadcrumb"></Breadcrumb>
     </el-header>
     <el-container>
       <el-aside id="navigation">
@@ -29,7 +29,7 @@ export default {
 </script>
 <style scoped lang="scss">
     #header{
-      height: 71px!important;
+      height: 70px!important;
       background: #4A524F;
     }
     #breadcrumb{

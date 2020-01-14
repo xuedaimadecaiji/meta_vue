@@ -45,7 +45,15 @@ export default {
   },
   computed: {
     categories () {
-      return this.$store.state.categories
+      let temp = []
+      if (this.categoryId && this.$store.state.categories[0]) {
+        this.$store.state.categories[0]['children'].forEach(item => {
+          if (item['id'] === parseInt(this.categoryId)) {
+            temp = item['children']
+          }
+        })
+      }
+      return temp
     }
   },
   data () {
@@ -77,6 +85,7 @@ export default {
           tableName: 'envLoadData'
         }
       ],
+      categoryId: '',
       categoryList: [],
       activeName: '1',
       postCategoryList: [],
@@ -92,6 +101,7 @@ export default {
   },
   beforeRouteEnter (to, from, next) {
     next(vm => {
+      vm.categoryId = to.params['categoryId']
       vm.postSceneForm.id = to.params['sceneId']
       api.get({url: 'sceneData\\' + to.params['sceneId']}).then(result => {
         vm.postSceneForm = result
@@ -105,6 +115,7 @@ export default {
     })
   },
   beforeRouteUpdate (to, from, next) {
+    this.categoryId = to.params['categoryId']
     this.postSceneForm.id = to.params['sceneId']
     let that = this
     api.get({url: 'sceneData\\' + to.params['sceneId']}).then(result => {

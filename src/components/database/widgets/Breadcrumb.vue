@@ -2,7 +2,7 @@
   <div class="Breadcrumb">
     <el-breadcrumb separator-class="el-icon-arrow-right">
       <el-breadcrumb-item :to="{ name: item['name'] }" v-for="item in navList" :key="item.index">
-        {{item['title']}}
+        <i v-if="item['icon']" :class="'fa fa-fw fa-' + item['icon']"></i> {{item['title']}}
       </el-breadcrumb-item>
     </el-breadcrumb>
   </div>
