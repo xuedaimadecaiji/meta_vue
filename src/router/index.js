@@ -5,21 +5,22 @@ import HomeIndex from '../components/home/HomeIndex'
 import DatabaseViewMain from '../components/database/DatabaseViewMain'
 import DatabaseIndex from '../components/database/DatabaseIndex'
 
-import SceneIndex from '../components/scene/SceneIndex'
-import SceneViewMain from '../components/scene/SceneViewMain'
-import SceneEdit from '../components/scene/SceneEdit'
+import SceneIndex from '../components/database/scene/SceneIndex'
+import SceneViewMain from '../components/database/scene/SceneViewMain'
+import SceneEdit from '../components/database/scene/SceneEdit'
+import SceneDetail from '../components/database/scene/SceneDetail'
 
-import SearchViewMain from '../components/search/SearchViewMain'
-import SearchIndex from '../components/search/SearchIndex'
+import SearchViewMain from '../components/database/search/SearchViewMain'
+import SearchIndex from '../components/database/search/SearchIndex'
 
-import ManageViewMain from '../components/manage/ManageViewMain'
-import ManageIndex from '../components/manage/ManageIndex'
-import ManageEdit from '../components/manage/ManageEdit'
+import ManageViewMain from '../components/database/manage/ManageViewMain'
+import ManageIndex from '../components/database/manage/ManageIndex'
+import ManageEdit from '../components/database/manage/ManageEdit'
 
-import BatchViewMain from '../components/batch/BatchViewMain'
-import BatchIndex from '../components/batch/BatchIndex'
-import BatchExport from '../components/batch/BatchExport'
-import BatchImport from '../components/batch/BatchImport'
+import BatchViewMain from '../components/database/batch/BatchViewMain'
+import BatchIndex from '../components/database/batch/BatchIndex'
+import BatchExport from '../components/database/batch/BatchExport'
+import BatchImport from '../components/database/batch/BatchImport'
 
 import UserViewMain from '../components/user/UserViewMain'
 import UserIndex from '../components/user/UserIndex'
@@ -75,7 +76,15 @@ export default new Router({
               component: SceneIndex
             },
             {
-              path: 'edit/:sceneId',
+              path: ':sceneId/detail',
+              meta: {
+                requireAuth: true
+              },
+              name: 'SceneDetail',
+              component: SceneDetail
+            },
+            {
+              path: ':sceneId/edit',
               meta: {
                 requireAuth: true
               },

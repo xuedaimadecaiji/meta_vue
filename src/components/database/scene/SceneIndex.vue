@@ -102,60 +102,14 @@
         </el-table-column>
       </el-table>
       </div>
-      <el-drawer
-        class="SceneDetailDrawer"
-        :title="selectScene['title']"
-        :visible.sync="sceneDetailDrawer"
-        :size="'80%'"
-        :direction="'btt'">
-        <el-container>
-          <el-aside style="width: 25%">
-            <el-card class="box-card" style="margin: 20px 60px 20px 20px">
-              <el-button
-                type="warning"
-                style="width: 100%; height: 100%"
-                @click="handlePut(null, selectScene)">
-                  编辑工艺
-              </el-button>
-            </el-card>
-            <el-card class="box-card" style="margin: 20px 60px 20px 20px">
-              <div slot="header" class="clearfix">
-                <span>{{selectScene['title']}}</span>
-              </div>
-              <div class="text item">
-                所属分类：{{selectScene['category']['title']}}
-              </div>
-              <div class="text item">
-                创建时间：{{selectScene['createdAt']}}
-              </div>
-              <div class="text item">
-                最近更新：{{selectScene['updatedAt']}}
-              </div>
-              <div class="text item">
-                描述：{{selectScene['description']}}
-              </div>
-            </el-card>
-          </el-aside>
-          <el-main>
-            <Pane :scene="selectScene" :editable="false" :label="item.label" :tableName="item.tableName"
-             v-for="item in tabPaneList" :key="item.index"></Pane>
-             <div class="clearfix"></div>
-            <el-divider></el-divider>
-          </el-main>
-        </el-container>
-      </el-drawer>
     </el-main>
   </el-container>
 </template>
 
 <script>
 import api from 'api'
-import Pane from './widgets/Pane'
 export default {
-  name: 'SceneCategory',
-  components: {
-    Pane
-  },
+  name: 'SceneIndex',
   computed: {
     categories () {
       let temp = []
@@ -171,38 +125,10 @@ export default {
   },
   data () {
     return {
-      tabPaneList: [
-        {
-          label: '物料数据',
-          name: '1',
-          tableName: 'materialData'
-        },
-        {
-          label: '能源数据',
-          name: '2',
-          tableName: 'energyData'
-        },
-        {
-          label: '关键工艺参数',
-          name: '3',
-          tableName: 'materialData'
-        },
-        {
-          label: '设备数据',
-          name: '4',
-          tableName: 'deviceData'
-        },
-        {
-          label: '环境负荷数据',
-          name: '5',
-          tableName: 'envLoadData'
-        }
-      ],
       postCategoryList: [],
       selectScene: {
         category: {}
       },
-      sceneDetailDrawer: false,
       categoryId: null,
       searchForm: {
         content: '',
@@ -239,12 +165,6 @@ export default {
           vm.searchForm.selectCategoryId = to.params['categoryId'] ? to.params['categoryId'] : ''
         })
       }
-      if (to.query['id']) {
-        api.get({url: 'sceneData/' + to.query['id']}).then(res => {
-          vm.selectScene = res
-        })
-        vm.sceneDetailDrawer = true
-      }
     })
   },
   beforeRouteUpdate (to, from, next) {
@@ -260,24 +180,11 @@ export default {
         this.searchForm.selectCategoryId = to.params['categoryId'] ? to.params['categoryId'] : ''
       })
     }
-    if (to.query['id']) {
-      api.get({url: 'sceneData/' + to.query['id']}).then(res => {
-        this.selectScene = res
-      })
-      this.sceneDetailDrawer = true
-    }
     next()
   },
   methods: {
     handleDetailDrawer (index, row) {
-      let query = {}
-      for (let i in this.$route.query) {
-        query[i] = this.$route.query[i]
-      }
-      query['id'] = row['id']
-      // console.log(query['id'])
-      this.$router.push({name: 'SceneIndex', query: query})
-      // this.sceneDetailDrawer = true
+      this.$router.push({name: 'SceneDetail', params: {sceneId: row['id']}})
     },
     handlePost () {
       this.postSceneForm.categoryId = this.postCategoryList[this.postCategoryList.length - 1]

@@ -8,13 +8,9 @@
 </template>
 
 <script>
-import Navigation from './components/widgets/Navigation'
-import Footer from './components/widgets/Footer'
 export default {
   name: 'App',
   components: {
-    Navigation,
-    Footer
   },
   mounted () {
     window.addEventListener('unload', this.saveState)
