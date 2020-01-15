@@ -50,11 +50,17 @@ export default new Router({
       children: [
         {
           path: '',
+          meta: {
+            requireAuth: true
+          },
           component: DatabaseIndex,
           name: 'DatabaseIndex'
         },
         {
           path: 'scene/',
+          meta: {
+            requireAuth: true
+          },
           component: SceneViewMain,
           children: [
             {

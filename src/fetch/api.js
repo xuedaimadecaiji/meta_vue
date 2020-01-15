@@ -29,8 +29,7 @@ function get (args) {
     let url = args.url
     let root = store.state.root
     if (url.search('system/') !== -1) {
-      root = 'http://localhost:8000/api/'
-      // root = 'http://10.1.1.230:8000/api/'
+      root = store.state.rootApi
     }
     axios.get(root + url, {params: args['params']})
       .then(response => {
@@ -121,8 +120,7 @@ function all (list) {
     list.forEach(item => {
       let url = item.url
       if (url.search('system/') !== -1) {
-        root = 'http://localhost:8000/api/'
-        // root = 'http://10.1.1.230:8000/api/'
+        root = store.state.rootApi
       }
       reqList.push(axios.get(root + url, {params: item['params']}))
     })

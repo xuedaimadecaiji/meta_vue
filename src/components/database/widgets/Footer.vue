@@ -1,8 +1,8 @@
 <template>
   <div class="Footer">
-    <div class="title">
+    <!-- <div class="title">
       {{title}}
-    </div>
+    </div> -->
     <div class="links">
       <router-link :to="{name: 'AboutIndex'}">关于我们</router-link>
       <router-link :to="{name: 'ContactIndex'}">联系我们</router-link>

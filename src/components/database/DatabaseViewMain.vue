@@ -4,14 +4,17 @@
       <Header id="header"></Header>
       <Breadcrumb id="breadcrumb"></Breadcrumb>
     </el-header>
-    <el-container>
+    <el-container id="main">
       <el-aside id="navigation">
         <Navigation></Navigation>
       </el-aside>
-      <el-main id="main">
+      <el-main id="content">
         <router-view></router-view>
       </el-main>
     </el-container>
+    <el-footer id="footer">
+
+    </el-footer>
   </el-container>
 </template>
 <script>
@@ -40,8 +43,13 @@ export default {
       width: 200px!important;
     }
     #main{
-      height: calc(100% - 0px) !important;
-      max-height: calc(100% - 0px) !important;
+      height: calc(100% - 110px) !important;
+      max-height: calc(100% - 110px) !important;
+      overflow-y: auto;
+    }
+    #content{
+      height: 100% !important;
+      max-height: 100% !important;
       overflow-y: auto;
     }
     .clearfix{

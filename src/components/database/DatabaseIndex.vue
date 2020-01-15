@@ -1,7 +1,10 @@
 <template>
   <div class="DatabaseIndex">
     <div class="wrapper">
-      <h3>
+      <h3 v-if="title">
+        欢迎来到，{{title}}负荷数据库
+      </h3>
+      <h3 v-else>
         欢迎来到，基础制造工艺资源环境负荷数据库
       </h3>
       <el-row :gutter="12">
@@ -50,6 +53,17 @@
 <script>
 export default {
   name: 'DatabaseIndex',
+  computed: {
+    title () {
+      let temp = null
+      this.$store.state.categories[0]['children'].forEach(item => {
+        if (parseInt(this.categoryId) === item['id']) {
+          temp = item['title']
+        }
+      })
+      return temp
+    }
+  },
   data () {
     return {
       categoryId: 0
